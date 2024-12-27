@@ -12,7 +12,7 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import utils.Utils;
-import views.screen.FXMLScreenHandler;
+import controller.common.FXMLScreenHandler;
 import views.screen.popup.PopupScreen;
 
 import java.io.File;

@@ -11,11 +11,10 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import utils.Configs;
-import views.screen.BaseScreenHandler;
+import controller.common.BaseScreenHandler;
 import views.screen.invoice.InvoiceScreenHandler;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 public class DeliveryMethodsScreenHandler extends BaseScreenHandler {
 

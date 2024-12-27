@@ -2,7 +2,6 @@ package views.screen.home;
 
 import common.exception.ViewCartException;
 import controller.HomeController;
-import controller.OrderController;
 import controller.ViewCartController;
 import entity.cart.Cart;
 import entity.media.Media;
@@ -17,10 +16,8 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import utils.Configs;
 import utils.Utils;
-import views.screen.BaseScreenHandler;
+import controller.common.BaseScreenHandler;
 import views.screen.cart.CartScreenHandler;
-
-import views.screen.order.OrderScreenHandler;
 
 import java.io.File;
 import java.io.IOException;

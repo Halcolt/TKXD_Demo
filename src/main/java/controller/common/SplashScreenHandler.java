@@ -1,4 +1,4 @@
-package views.screen;
+package controller.common;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -10,15 +10,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class SplashScreenHandler implements Initializable {
-
     @FXML
     ImageView logo;
 
-
-    /**
-     * @param location
-     * @param resources
-     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         File file = new File("assets/images/Logo.png");

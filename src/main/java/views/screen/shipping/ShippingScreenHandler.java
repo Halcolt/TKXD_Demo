@@ -2,7 +2,6 @@ package views.screen.shipping;
 
 import common.exception.InvalidDeliveryInfoException;
 import controller.PlaceOrderController;
-import entity.invoice.Invoice;
 import entity.order.Order;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -14,8 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import utils.Configs;
-import views.screen.BaseScreenHandler;
-import views.screen.invoice.InvoiceScreenHandler;
+import controller.common.BaseScreenHandler;
 import views.screen.popup.PopupScreen;
 
 import java.io.IOException;

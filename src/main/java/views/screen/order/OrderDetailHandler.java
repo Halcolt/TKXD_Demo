@@ -5,15 +5,11 @@ import entity.order.Order;
 import entity.order.entities.DetailResponse;
 import javafx.fxml.FXML;
 import javafx.stage.Stage;
-import views.screen.BaseScreenHandler;
-import views.screen.FXMLScreenHandler;
+import controller.common.BaseScreenHandler;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Button;
 
-import java.awt.*;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Date;
 
 public class OrderDetailHandler extends BaseScreenHandler {
 

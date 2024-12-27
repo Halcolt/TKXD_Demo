@@ -1,4 +1,4 @@
-package views.screen;
+package controller.common;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.image.Image;

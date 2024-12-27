@@ -12,9 +12,7 @@ import utils.Configs;
 import utils.Utils;
 import utils.enums.OrderStatus;
 import utils.resources.Resource;
-import views.screen.BaseScreenHandler;
-import views.screen.FXMLScreenHandler;
-import views.screen.payment.ResultScreenHandler;
+import controller.common.FXMLScreenHandler;
 
 import java.io.File;
 import java.io.IOException;

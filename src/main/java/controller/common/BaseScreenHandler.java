@@ -1,4 +1,4 @@
-package views.screen;
+package controller.common;
 
 import controller.AccountController;
 import controller.BaseController;

@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import utils.Configs;
-import views.screen.BaseScreenHandler;
+import controller.common.BaseScreenHandler;
 
 import java.io.IOException;
 

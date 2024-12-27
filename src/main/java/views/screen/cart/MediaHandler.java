@@ -16,7 +16,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import utils.Configs;
 import utils.Utils;
-import views.screen.FXMLScreenHandler;
+import controller.common.FXMLScreenHandler;
 
 import java.io.File;
 import java.io.IOException;

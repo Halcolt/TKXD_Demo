@@ -12,12 +12,11 @@ import javafx.stage.Stage;
 //import subsystem.VnPaySubsystem;
 import utils.Configs;
 import utils.Utils;
-import views.screen.BaseScreenHandler;
+import controller.common.BaseScreenHandler;
 import views.screen.payment.PaymentScreenHandler;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.logging.Logger;
 //Khong vi pham nguyen tac SOLID
 public class InvoiceScreenHandler extends BaseScreenHandler {

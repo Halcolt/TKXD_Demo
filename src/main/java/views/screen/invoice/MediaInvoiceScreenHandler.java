@@ -7,7 +7,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import utils.Utils;
-import views.screen.FXMLScreenHandler;
+import controller.common.FXMLScreenHandler;
 
 import java.io.IOException;
 import java.sql.SQLException;

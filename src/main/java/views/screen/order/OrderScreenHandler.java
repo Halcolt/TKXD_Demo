@@ -1,8 +1,6 @@
 package views.screen.order;
 
 import controller.OrderController;
-import controller.ViewCartController;
-import entity.cart.CartMedia;
 import entity.order.Order;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -11,8 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import utils.Configs;
-import views.screen.BaseScreenHandler;
-import views.screen.cart.MediaHandler;
+import controller.common.BaseScreenHandler;
 import views.screen.payment.ResultScreenHandler;
 
 import java.io.File;

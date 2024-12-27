@@ -1,15 +1,10 @@
 import javafx.application.Application;
-import javafx.fxml.FXML;
-import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import utils.Configs;
 import views.screen.home.HomeScreenHandler;
 import java.io.IOException;
 
 public class App extends Application {
-
-    @FXML
-    ImageView logo;
 
     public static void main(String[] args) {
         launch(args);

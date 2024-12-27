@@ -10,13 +10,11 @@ import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import subsystem.vnPay.Config;
 import utils.Configs;
-import utils.Utils;
-import views.screen.BaseScreenHandler;
+import controller.common.BaseScreenHandler;
 
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 

@@ -40,12 +40,6 @@ public class HomeScreenHandler extends BaseScreenHandler implements Initializabl
     private Label numMediaInCart;
 
     @FXML
-    private Button login;
-
-    @FXML
-    private Button orderBtn;
-
-    @FXML
     private ImageView aimsImage;
 
     @FXML
@@ -97,13 +91,6 @@ public class HomeScreenHandler extends BaseScreenHandler implements Initializabl
     @Override
 //Sequential Cohesion
     public void show() {
-        try {
-            if (accountController.getLoggedInAccount() != null) {
-                login.setText("Chào mừng, " + accountController.getLoggedInAccount().getName());
-            }
-        } catch(Exception e) {
-            System.out.println("null");
-        }
         numMediaInCart.setText(String.valueOf(Cart.getCart().getListMedia().size()) + " media");
         super.show();
     }
@@ -134,17 +121,6 @@ public class HomeScreenHandler extends BaseScreenHandler implements Initializabl
                 cartScreen.show(this);
             } catch (IOException | SQLException e1) {
                 throw new ViewCartException(Arrays.toString(e1.getStackTrace()).replaceAll(", ", "\n"));
-            }
-        });
-
-        orderBtn.setOnMouseClicked(e -> {
-            try {
-                var orderScreen = new OrderScreenHandler(this.stage, Configs.ORDER_PATH);
-                orderScreen.setHomeScreenHandler(this);
-                orderScreen.setBController(new OrderController());
-                orderScreen.show(this);
-            } catch (IOException | SQLException e1) {
-                e1.printStackTrace();
             }
         });
 

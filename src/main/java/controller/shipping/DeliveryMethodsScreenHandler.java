@@ -1,7 +1,6 @@
 package controller.shipping;
 
 import controller.PlaceOrderController;
-import controller.PlaceRushOrderController;
 import entity.invoice.Invoice;
 import entity.order.Order;
 import entity.shipping.Shipment;
@@ -70,7 +69,7 @@ public class DeliveryMethodsScreenHandler extends BaseScreenHandler {
         shipment.setDeliveryTime(deliveryDateString);
         shipment.setDeliveryInstruction(deliveryInstructionString);
 
-        PlaceRushOrderController.validatePlaceRushOrderData(shipment);
+        validatePlaceRushOrderData(shipment);
         order.setShipment(shipment);
 
         // // create invoice screen
@@ -167,5 +166,10 @@ public class DeliveryMethodsScreenHandler extends BaseScreenHandler {
      */
     public PlaceOrderController getBController() {
         return (PlaceOrderController) super.getBController();
+    }
+    public static void validatePlaceRushOrderData(Shipment deliveryData) {
+        if (deliveryData.getShipType() == utils.Configs.PLACE_RUSH_ORDER) {
+            // validate
+        }
     }
 }

@@ -1,6 +1,7 @@
 package controller.home;
 
 import common.exception.ViewCartException;
+import controller.cart.CartScreenController;
 import entity.cart.Cart;
 import entity.cart.CartMedia;
 import entity.media.Media;
@@ -16,8 +17,7 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import utils.Configs;
 import utils.Utils;
-import controller.common.BaseScreenHandler;
-import controller.cart.CartScreenHandler;
+import controller.common.BaseScreenController;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,9 +29,9 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
-public class HomeScreenHandler extends BaseScreenHandler implements Initializable {
+public class HomeScreenController extends BaseScreenController implements Initializable {
 
-    public static Logger LOGGER = Utils.getLogger(HomeScreenHandler.class.getName());
+    public static Logger LOGGER = Utils.getLogger(HomeScreenController.class.getName());
 
     @FXML
     private Label numMediaInCart;
@@ -62,7 +62,7 @@ public class HomeScreenHandler extends BaseScreenHandler implements Initializabl
 
     private List homeItems;
 
-    public HomeScreenHandler(Stage stage, String screenPath) throws IOException {
+    public HomeScreenController(Stage stage, String screenPath) throws IOException {
         super(stage, screenPath);
     }
 
@@ -103,7 +103,7 @@ public class HomeScreenHandler extends BaseScreenHandler implements Initializabl
         cartImage.setOnMouseClicked(e -> {
 
             try {
-                var cartScreen = new CartScreenHandler(this.stage, Configs.CART_SCREEN_PATH);
+                var cartScreen = new CartScreenController(this.stage, Configs.CART_SCREEN_PATH);
                 cartScreen.setHomeScreenHandler(this);
 //                cartScreen.setBController(new ViewCartController());
                 cartScreen.show(this);
@@ -129,7 +129,7 @@ public class HomeScreenHandler extends BaseScreenHandler implements Initializabl
             this.homeItems = new ArrayList<>();
             for (Object object : medium) {
                 Media media = (Media) object;
-                MediaHandler m1 = new MediaHandler(Configs.HOME_MEDIA_PATH, media, this);
+                MediaController m1 = new MediaController(Configs.HOME_MEDIA_PATH, media, this);
                 this.homeItems.add(m1);
             }
         } catch (SQLException | IOException e) {
@@ -187,7 +187,7 @@ public class HomeScreenHandler extends BaseScreenHandler implements Initializabl
                 int vid = hboxMedia.getChildren().indexOf(node);
                 VBox vBox = (VBox) node;
                 while (vBox.getChildren().size() < 3 && !mediaItems.isEmpty()) {
-                    MediaHandler media = (MediaHandler) mediaItems.get(0);
+                    MediaController media = (MediaController) mediaItems.get(0);
                     vBox.getChildren().add(media.getContent());
                     mediaItems.remove(media);
                 }
@@ -221,7 +221,7 @@ public class HomeScreenHandler extends BaseScreenHandler implements Initializabl
             // filter only media with the choosen category
             List filteredItems = new ArrayList<>();
             homeItems.forEach(me -> {
-                MediaHandler media = (MediaHandler) me;
+                MediaController media = (MediaController) me;
                 if (media.getMedia().getTitle().toLowerCase().startsWith(text.toLowerCase())) {
                     filteredItems.add(media);
                 }

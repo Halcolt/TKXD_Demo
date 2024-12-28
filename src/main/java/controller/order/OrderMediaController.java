@@ -12,12 +12,12 @@ import utils.Configs;
 import utils.Utils;
 import utils.enums.OrderStatus;
 import utils.resources.Resource;
-import controller.common.FXMLScreenHandler;
+import controller.common.FXMLScreenController;
 
 import java.io.File;
 import java.io.IOException;
 
-public class OrderMediaHandler extends FXMLScreenHandler {
+public class OrderMediaController extends FXMLScreenController {
     @FXML
     private Label addess;
 
@@ -66,9 +66,9 @@ public class OrderMediaHandler extends FXMLScreenHandler {
     @FXML
     private Button detailOrderBtn;
 
-    private OrderScreenHandler orderMediaHandler;
+    private OrderScreenController orderMediaHandler;
     private Order order;
-    public OrderMediaHandler(String screenPath, OrderScreenHandler orderScreenHandler) throws IOException {
+    public OrderMediaController(String screenPath, OrderScreenController orderScreenHandler) throws IOException {
         super(screenPath);
 
         this.orderMediaHandler = orderScreenHandler;
@@ -82,7 +82,7 @@ public class OrderMediaHandler extends FXMLScreenHandler {
         Stage newWindow = new Stage();
         try {
 
-            OrderDetailHandler resultScreenHandler = new OrderDetailHandler(newWindow,Configs.ORDER_DETAILS_PATH, order);
+            OrderDetailController resultScreenHandler = new OrderDetailController(newWindow,Configs.ORDER_DETAILS_PATH, order);
             resultScreenHandler.showScreen();
         } catch (IOException ioException) {
             ioException.printStackTrace();

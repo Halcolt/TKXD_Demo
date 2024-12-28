@@ -3,44 +3,44 @@ package controller.common;
 import controller.BaseController;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import controller.home.HomeScreenHandler;
+import controller.home.HomeScreenController;
 
 import java.io.IOException;
 import java.util.Hashtable;
 
-public class BaseScreenHandler extends FXMLScreenHandler {
+public class BaseScreenController extends FXMLScreenController {
 
     protected final Stage stage;
-    protected HomeScreenHandler homeScreenHandler;
+    protected HomeScreenController homeScreenHandler;
     protected Hashtable<String, String> messages;
     private Scene scene;
-    private BaseScreenHandler prev;
+    private BaseScreenController prev;
     private BaseController bController;
 
     //Data Coupling
-    private BaseScreenHandler(String screenPath) throws IOException {
+    private BaseScreenController(String screenPath) throws IOException {
         super(screenPath);
         this.stage = new Stage();
     }
 
 
-    public BaseScreenHandler(Stage stage, String screenPath) throws IOException {
+    public BaseScreenController(Stage stage, String screenPath) throws IOException {
         super(screenPath);
         this.stage = stage;
 //        accountController = AccountController.getAccountController();
     }
 
     /**
-     * @return BaseScreenHandler
+     * @return BaseScreenController
      */
-    public BaseScreenHandler getPreviousScreen() {
+    public BaseScreenController getPreviousScreen() {
         return this.prev;
     }
 
     /**
      * @param prev
      */
-    public void setPreviousScreen(BaseScreenHandler prev) {
+    public void setPreviousScreen(BaseScreenController prev) {
         this.prev = prev;
     }
 
@@ -87,7 +87,7 @@ public class BaseScreenHandler extends FXMLScreenHandler {
     /**
      * @param HomeScreenHandler
      */
-    public void setHomeScreenHandler(HomeScreenHandler HomeScreenHandler) {
+    public void setHomeScreenHandler(HomeScreenController HomeScreenHandler) {
         this.homeScreenHandler = HomeScreenHandler;
     }
 

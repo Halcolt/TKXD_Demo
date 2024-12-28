@@ -3,6 +3,8 @@ package controller.cart;
 import common.exception.MediaNotAvailableException;
 import common.exception.PlaceOrderException;
 import controller.PlaceOrderController;
+import controller.common.BaseScreenController;
+import controller.shipping.ShippingScreenController;
 import entity.cart.CartMedia;
 import entity.cart.Cart;
 import javafx.fxml.FXML;
@@ -14,9 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import utils.Configs;
 import utils.Utils;
-import controller.common.BaseScreenHandler;
-import controller.popup.PopupScreen;
-import controller.shipping.ShippingScreenHandler;
+import controller.popup.PopupScreenController;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,12 +25,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
 
-//SRP: Do CartScreenHandler dam nhan nhieu trach nhiem dong thoi xu ly cac thao tac UI.
-//DIP: CartScreenHandler nen phu thuoc vao cac giao dien thay vi cac lop truc tiep.
+//SRP: Do CartScreenController dam nhan nhieu trach nhiem dong thoi xu ly cac thao tac UI.
+//DIP: CartScreenController nen phu thuoc vao cac giao dien thay vi cac lop truc tiep.
 
-public class CartScreenHandler extends BaseScreenHandler {
+public class CartScreenController extends BaseScreenController {
 
-    private static Logger LOGGER = Utils.getLogger(CartScreenHandler.class.getName());
+    private static Logger LOGGER = Utils.getLogger(CartScreenController.class.getName());
     @FXML
     VBox vboxCart;
     @FXML
@@ -54,7 +54,7 @@ public class CartScreenHandler extends BaseScreenHandler {
 
     //Control Coupling
     //Functional Cohesion
-    public CartScreenHandler(Stage stage, String screenPath) throws IOException {
+    public CartScreenController(Stage stage, String screenPath) throws IOException {
         super(stage, screenPath);
 
         // fix relative image path caused by fxml
@@ -111,7 +111,7 @@ public class CartScreenHandler extends BaseScreenHandler {
      * @param prevScreen
      * @throws SQLException
      */
-    public void show(BaseScreenHandler prevScreen) throws SQLException {
+    public void show(BaseScreenController prevScreen) throws SQLException {
         setPreviousScreen(prevScreen);
         setScreenTitle("Cart Screen");
         checkAvailabilityOfProduct();
@@ -138,7 +138,7 @@ public class CartScreenHandler extends BaseScreenHandler {
             // create placeOrderController and process the order
             var placeOrderController = new PlaceOrderController();
             if (placeOrderController.getListCartMedia().size() == 0) {
-                PopupScreen.error("You don't have anything to place");
+                PopupScreenController.error("You don't have anything to place");
                 return;
             }
 
@@ -151,7 +151,7 @@ public class CartScreenHandler extends BaseScreenHandler {
             var order = placeOrderController.createOrder();
 
             // display shipping form
-            ShippingScreenHandler ShippingScreenHandler = new ShippingScreenHandler(this.stage, Configs.SHIPPING_SCREEN_PATH, order);
+            ShippingScreenController ShippingScreenHandler = new ShippingScreenController(this.stage, Configs.SHIPPING_SCREEN_PATH, order);
             ShippingScreenHandler.setPreviousScreen(this);
             ShippingScreenHandler.setHomeScreenHandler(homeScreenHandler);
             ShippingScreenHandler.setScreenTitle("Shipping Screen");
@@ -206,7 +206,7 @@ public class CartScreenHandler extends BaseScreenHandler {
 
                 // display the attribute of vboxCart media
                 CartMedia cartMedia = (CartMedia) cm;
-                MediaHandler mediaCartScreen = new MediaHandler(Configs.CART_MEDIA_PATH, this);
+                MediaController mediaCartScreen = new MediaController(Configs.CART_MEDIA_PATH, this);
                 mediaCartScreen.setCartMedia(cartMedia);
 
                 // add spinner

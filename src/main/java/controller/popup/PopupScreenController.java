@@ -1,5 +1,6 @@
 package controller.popup;
 
+import controller.common.BaseScreenController;
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -8,12 +9,11 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import utils.Configs;
-import controller.common.BaseScreenHandler;
 
 import java.io.IOException;
 
 
-public class PopupScreen extends BaseScreenHandler {
+public class PopupScreenController extends BaseScreenController {
 
 
     @FXML
@@ -23,7 +23,7 @@ public class PopupScreen extends BaseScreenHandler {
     Label message;
 
 
-    public PopupScreen(Stage stage) throws IOException {
+    public PopupScreenController(Stage stage) throws IOException {
         super(stage, Configs.POPUP_PATH);
     }
 
@@ -32,11 +32,11 @@ public class PopupScreen extends BaseScreenHandler {
      * @param message
      * @param imagepath
      * @param undecorated
-     * @return PopupScreen
+     * @return PopupScreenController
      * @throws IOException
      */
-    private static PopupScreen popup(String message, String imagepath, Boolean undecorated) throws IOException {
-        PopupScreen popup = new PopupScreen(new Stage());
+    private static PopupScreenController popup(String message, String imagepath, Boolean undecorated) throws IOException {
+        PopupScreenController popup = new PopupScreenController(new Stage());
         if (undecorated) popup.stage.initStyle(StageStyle.UNDECORATED);
         popup.message.setText(message);
         popup.setImage(imagepath);
@@ -64,10 +64,10 @@ public class PopupScreen extends BaseScreenHandler {
 
     /**
      * @param message
-     * @return PopupScreen
+     * @return PopupScreenController
      * @throws IOException
      */
-    public static PopupScreen loading(String message) throws IOException {
+    public static PopupScreenController loading(String message) throws IOException {
         return popup(message, Configs.IMAGE_PATH + "/" + "loading.gif", true);
     }
 

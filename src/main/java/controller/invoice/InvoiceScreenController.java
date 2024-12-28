@@ -2,6 +2,8 @@ package controller.invoice;
 
 import common.exception.ProcessInvoiceException;
 import controller.PaymentController;
+import controller.common.BaseScreenController;
+import controller.payment.PaymentScreenController;
 import entity.invoice.Invoice;
 import entity.order.OrderMedia;
 import javafx.fxml.FXML;
@@ -12,16 +14,14 @@ import javafx.stage.Stage;
 //import subsystem.VnPaySubsystem;
 import utils.Configs;
 import utils.Utils;
-import controller.common.BaseScreenHandler;
-import controller.payment.PaymentScreenHandler;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Logger;
 //Khong vi pham nguyen tac SOLID
-public class InvoiceScreenHandler extends BaseScreenHandler {
+public class InvoiceScreenController extends BaseScreenController {
 
-    private static Logger LOGGER = Utils.getLogger(InvoiceScreenHandler.class.getName());
+    private static Logger LOGGER = Utils.getLogger(InvoiceScreenController.class.getName());
 
     @FXML
     private Label pageTitle;
@@ -57,7 +57,7 @@ public class InvoiceScreenHandler extends BaseScreenHandler {
 
     //Data coupling
     //Functional Cohesion
-    public InvoiceScreenHandler(Stage stage, String screenPath, Invoice invoice) throws IOException {
+    public InvoiceScreenController(Stage stage, String screenPath, Invoice invoice) throws IOException {
         super(stage, screenPath);
         this.invoice = invoice;
         setInvoiceInfo();
@@ -78,7 +78,7 @@ public class InvoiceScreenHandler extends BaseScreenHandler {
         invoice.setAmount(amount);
         invoice.getOrder().getlstOrderMedia().forEach(orderMedia -> {
             try {
-                MediaInvoiceScreenHandler mis = new MediaInvoiceScreenHandler(Configs.INVOICE_MEDIA_SCREEN_PATH);
+                MediaInvoiceScreenController mis = new MediaInvoiceScreenController(Configs.INVOICE_MEDIA_SCREEN_PATH);
                 mis.setOrderMedia((OrderMedia) orderMedia);
                 vboxItems.getChildren().add(mis.getContent());
             } catch (IOException | SQLException e) {
@@ -100,7 +100,7 @@ public class InvoiceScreenHandler extends BaseScreenHandler {
     @FXML
     void confirmInvoice(MouseEvent event) throws IOException {
 
-        BaseScreenHandler paymentScreen = new PaymentScreenHandler(this.stage, Configs.PAYMENT_SCREEN_PATH, invoice);
+        BaseScreenController paymentScreen = new PaymentScreenController(this.stage, Configs.PAYMENT_SCREEN_PATH, invoice);
         paymentScreen.setBController(new PaymentController());
         paymentScreen.setPreviousScreen(this);
         paymentScreen.setHomeScreenHandler(homeScreenHandler);

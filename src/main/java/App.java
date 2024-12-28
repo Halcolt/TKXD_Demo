@@ -1,7 +1,7 @@
 import javafx.application.Application;
 import javafx.stage.Stage;
 import utils.Configs;
-import controller.home.HomeScreenHandler;
+import controller.home.HomeScreenController;
 import java.io.IOException;
 
 public class App extends Application {
@@ -13,7 +13,7 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            HomeScreenHandler homeHandler = new HomeScreenHandler(primaryStage, Configs.HOME_PATH);
+            HomeScreenController homeHandler = new HomeScreenController(primaryStage, Configs.HOME_PATH);
             homeHandler.setScreenTitle("Home Screen");
             homeHandler.setImage();
             homeHandler.show();

@@ -1,17 +1,17 @@
 package controller.order;
 
 import controller.OrderController;
+import controller.common.BaseScreenController;
 import entity.order.Order;
 import entity.order.entities.DetailResponse;
 import javafx.fxml.FXML;
 import javafx.stage.Stage;
-import controller.common.BaseScreenHandler;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class OrderDetailHandler extends BaseScreenHandler {
+public class OrderDetailController extends BaseScreenController {
 
     @FXML
     private TextField transactionId;
@@ -42,11 +42,11 @@ public class OrderDetailHandler extends BaseScreenHandler {
 
     private Order order;
 
-    public OrderDetailHandler(Stage stage, String screenPath) throws IOException {
+    public OrderDetailController(Stage stage, String screenPath) throws IOException {
         super(stage, screenPath);
     }
 
-    public OrderDetailHandler(Stage stage, String screenPath, Order order) throws IOException {
+    public OrderDetailController(Stage stage, String screenPath, Order order) throws IOException {
         super(stage, screenPath);
         super.setBController(new OrderController());
         this.order = order;
@@ -71,7 +71,7 @@ public class OrderDetailHandler extends BaseScreenHandler {
         promotionAmount.setText(response.getPromotionAmount());
     }
 
-    public void show(BaseScreenHandler prevScreen) throws SQLException, IOException {
+    public void show(BaseScreenController prevScreen) throws SQLException, IOException {
         setPreviousScreen(prevScreen);
         setScreenTitle("Order Detail Screen");
 

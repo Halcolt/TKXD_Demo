@@ -16,7 +16,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import utils.Configs;
 import utils.Utils;
-import controller.common.FXMLScreenHandler;
+import controller.common.FXMLScreenController;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,10 +24,10 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.logging.Logger;
 
-// SRP: MediaHandler xu ly nhieu tac vu cung luc: xu ly giao dien, ket noi database ,.. 
-public class MediaHandler extends FXMLScreenHandler {
+// SRP: MediaController xu ly nhieu tac vu cung luc: xu ly giao dien, ket noi database ,..
+public class MediaController extends FXMLScreenController {
 
-    private static Logger LOGGER = Utils.getLogger(MediaHandler.class.getName());
+    private static Logger LOGGER = Utils.getLogger(MediaController.class.getName());
 
     @FXML
     protected HBox hboxMedia;
@@ -58,11 +58,11 @@ public class MediaHandler extends FXMLScreenHandler {
 
     private CartMedia cartMedia;
     private Spinner<Integer> spinner;
-    private CartScreenHandler cartScreen;
+    private CartScreenController cartScreen;
 
     //Data Coupling
     //Functional Cohesion
-    public MediaHandler(String screenPath, CartScreenHandler cartScreen) throws IOException {
+    public MediaController(String screenPath, CartScreenController cartScreen) throws IOException {
         super(screenPath);
         this.cartScreen = cartScreen;
         hboxMedia.setAlignment(Pos.CENTER);

@@ -9,7 +9,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class SplashScreenHandler implements Initializable {
+public class SplashScreenController implements Initializable {
     @FXML
     ImageView logo;
 

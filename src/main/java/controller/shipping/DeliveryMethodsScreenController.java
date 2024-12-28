@@ -1,6 +1,8 @@
 package controller.shipping;
 
 import controller.PlaceOrderController;
+import controller.common.BaseScreenController;
+import controller.invoice.InvoiceScreenController;
 import entity.invoice.Invoice;
 import entity.order.Order;
 import entity.shipping.Shipment;
@@ -10,12 +12,10 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import utils.Configs;
-import controller.common.BaseScreenHandler;
-import controller.invoice.InvoiceScreenHandler;
 
 import java.io.IOException;
 
-public class DeliveryMethodsScreenHandler extends BaseScreenHandler {
+public class DeliveryMethodsScreenController extends BaseScreenController {
 
     private Order order;
 
@@ -40,7 +40,7 @@ public class DeliveryMethodsScreenHandler extends BaseScreenHandler {
     @FXML
     private Button updateDeliveryMethodInfoButton;
 
-    public DeliveryMethodsScreenHandler(Stage stage, String screenPath, Order order) throws IOException {
+    public DeliveryMethodsScreenController(Stage stage, String screenPath, Order order) throws IOException {
         super(stage, screenPath);
         this.order = order;
     }
@@ -74,7 +74,7 @@ public class DeliveryMethodsScreenHandler extends BaseScreenHandler {
 
         // // create invoice screen
         Invoice invoice = getBController().createInvoice(order);
-        BaseScreenHandler InvoiceScreenHandler = new InvoiceScreenHandler(this.stage, Configs.INVOICE_SCREEN_PATH, invoice);
+        BaseScreenController InvoiceScreenHandler = new InvoiceScreenController(this.stage, Configs.INVOICE_SCREEN_PATH, invoice);
         InvoiceScreenHandler.setPreviousScreen(this);
         InvoiceScreenHandler.setHomeScreenHandler(homeScreenHandler);
         InvoiceScreenHandler.setScreenTitle("Invoice Screen");
@@ -90,7 +90,7 @@ public class DeliveryMethodsScreenHandler extends BaseScreenHandler {
     @FXML
     private void handleBack(MouseEvent event) throws IOException {
         // Back to previous screen
-        BaseScreenHandler ShippingScreenHandler = new ShippingScreenHandler(this.stage, Configs.SHIPPING_SCREEN_PATH,
+        BaseScreenController ShippingScreenHandler = new ShippingScreenController(this.stage, Configs.SHIPPING_SCREEN_PATH,
                 this.order);
         ShippingScreenHandler.setPreviousScreen(this);
         ShippingScreenHandler.setHomeScreenHandler(homeScreenHandler);

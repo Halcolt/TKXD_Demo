@@ -12,17 +12,17 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import utils.Utils;
-import controller.common.FXMLScreenHandler;
-import controller.popup.PopupScreen;
+import controller.common.FXMLScreenController;
+import controller.popup.PopupScreenController;
 
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Logger;
 
-public class MediaHandler extends FXMLScreenHandler {
+public class MediaController extends FXMLScreenController {
 
-    private static Logger LOGGER = Utils.getLogger(MediaHandler.class.getName());
+    private static Logger LOGGER = Utils.getLogger(MediaController.class.getName());
     @FXML
     protected ImageView mediaImage;
     @FXML
@@ -39,9 +39,9 @@ public class MediaHandler extends FXMLScreenHandler {
     private Button deleteBtn;
 
     private Media media;
-    private HomeScreenHandler home;
+    private HomeScreenController home;
 
-    public MediaHandler(String screenPath, Media media, HomeScreenHandler home) throws SQLException, IOException {
+    public MediaController(String screenPath, Media media, HomeScreenController home) throws SQLException, IOException {
         super(screenPath);
         this.media = media;
         this.home = home;
@@ -69,12 +69,12 @@ public class MediaHandler extends FXMLScreenHandler {
                 media.setQuantity(media.getQuantity() - spinnerChangeNumber.getValue());
                 mediaAvail.setText(String.valueOf(media.getQuantity()));
                 home.getNumMediaCartLabel().setText(String.valueOf(cart.getTotalMedia() + " media"));
-                PopupScreen.success("The media " + media.getTitle() + " added to Cart");
+                PopupScreenController.success("The media " + media.getTitle() + " added to Cart");
             } catch (MediaNotAvailableException exp) {
                 try {
                     String message = "Not enough media:\nRequired: " + spinnerChangeNumber.getValue() + "\nAvail: " + media.getQuantity();
                     LOGGER.severe(message);
-                    PopupScreen.error(message);
+                    PopupScreenController.error(message);
                 } catch (Exception e) {
                     LOGGER.severe("Cannot add media to cart: ");
                 }

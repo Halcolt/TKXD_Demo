@@ -7,14 +7,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import utils.Utils;
-import controller.common.FXMLScreenHandler;
+import controller.common.FXMLScreenController;
 
 import java.io.IOException;
 import java.sql.SQLException;
 
 //Khong vi pham quy tac SOLID
 
-public class MediaInvoiceScreenHandler extends FXMLScreenHandler {
+public class MediaInvoiceScreenController extends FXMLScreenController {
 
     @FXML
     private HBox hboxMedia;
@@ -44,7 +44,7 @@ public class MediaInvoiceScreenHandler extends FXMLScreenHandler {
 
     //Data Coupling
     //Functional Cohesion
-    public MediaInvoiceScreenHandler(String screenPath) throws IOException {
+    public MediaInvoiceScreenController(String screenPath) throws IOException {
         super(screenPath);
     }
 

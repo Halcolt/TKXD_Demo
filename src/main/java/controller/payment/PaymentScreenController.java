@@ -1,6 +1,7 @@
 package controller.payment;
 
 import controller.PaymentController;
+import controller.common.BaseScreenController;
 import entity.invoice.Invoice;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -10,7 +11,6 @@ import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import subsystem.vnPay.Config;
 import utils.Configs;
-import controller.common.BaseScreenHandler;
 
 import java.io.IOException;
 import java.net.URI;
@@ -18,7 +18,7 @@ import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PaymentScreenHandler extends BaseScreenHandler {
+public class PaymentScreenController extends BaseScreenController {
 
     private Invoice invoice;
     @FXML
@@ -27,7 +27,7 @@ public class PaymentScreenHandler extends BaseScreenHandler {
     private VBox vBox;
 
 
-    public PaymentScreenHandler(Stage stage, String screenPath, Invoice invoice) throws IOException {
+    public PaymentScreenController(Stage stage, String screenPath, Invoice invoice) throws IOException {
         super(stage, screenPath);
         this.invoice = invoice;
 
@@ -107,7 +107,7 @@ public class PaymentScreenHandler extends BaseScreenHandler {
         Map<String, String> response = ctrl.makePayment(res, this.invoice.getOrder().getId());
 
         // Tạo và hiển thị màn hình kết quả
-        BaseScreenHandler resultScreen = new ResultScreenHandler(this.stage, Configs.RESULT_SCREEN_PATH,
+        BaseScreenController resultScreen = new ResultScreenController(this.stage, Configs.RESULT_SCREEN_PATH,
                 response.get("RESULT"), response.get("MESSAGE"));
         ctrl.emptyCart();
         resultScreen.setPreviousScreen(this);

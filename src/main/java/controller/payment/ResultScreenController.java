@@ -5,11 +5,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import controller.common.BaseScreenHandler;
+import controller.common.BaseScreenController;
 
 import java.io.IOException;
 
-public class ResultScreenHandler extends BaseScreenHandler {
+public class ResultScreenController extends BaseScreenController {
 
     private String result;
     private String message;
@@ -22,7 +22,7 @@ public class ResultScreenHandler extends BaseScreenHandler {
     @FXML
     private Label messageLabel;
 
-    public ResultScreenHandler(Stage stage, String screenPath, String result, String message) throws IOException {
+    public ResultScreenController(Stage stage, String screenPath, String result, String message) throws IOException {
         super(stage, screenPath);
         resultLabel.setText(result);
         messageLabel.setText(message);

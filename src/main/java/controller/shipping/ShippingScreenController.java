@@ -2,6 +2,7 @@ package controller.shipping;
 
 import common.exception.InvalidDeliveryInfoException;
 import controller.PlaceOrderController;
+import controller.common.BaseScreenController;
 import entity.order.Order;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -13,8 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import utils.Configs;
-import controller.common.BaseScreenHandler;
-import controller.popup.PopupScreen;
+import controller.popup.PopupScreenController;
 
 import java.io.IOException;
 import java.net.URL;
@@ -22,7 +22,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
-public class ShippingScreenHandler extends BaseScreenHandler implements Initializable {
+public class ShippingScreenController extends BaseScreenController implements Initializable {
 
     @FXML
     private Label screenTitle;
@@ -44,7 +44,7 @@ public class ShippingScreenHandler extends BaseScreenHandler implements Initiali
 
     private Order order;
 
-    public ShippingScreenHandler(Stage stage, String screenPath, Order order) throws IOException {
+    public ShippingScreenController(Stage stage, String screenPath, Order order) throws IOException {
         super(stage, screenPath);
         this.order = order;
     }
@@ -86,20 +86,20 @@ public class ShippingScreenHandler extends BaseScreenHandler implements Initiali
         messages.put("province", province.getValue());
         var placeOrderCtrl = getBController();
         if (!placeOrderCtrl.validateContainLetterAndNoEmpty(name.getText())) {
-            PopupScreen.error("Name is not valid!");
+            PopupScreenController.error("Name is not valid!");
             return;
         }
         if (!placeOrderCtrl.validatePhoneNumber(phone.getText())) {
-            PopupScreen.error("Phone is not valid!");
+            PopupScreenController.error("Phone is not valid!");
             return;
 
         }
 //        if (!placeOrderCtrl.validateContainLetterAndNoEmpty(address.getText())) {
-//            PopupScreen.error("Address is not valid!");
+//            PopupScreenController.error("Address is not valid!");
 //            return;
 //        }
         if (province.getValue() == null) {
-            PopupScreen.error("Province is empty!");
+            PopupScreenController.error("Province is empty!");
             return;
         }
         try {
@@ -119,7 +119,7 @@ public class ShippingScreenHandler extends BaseScreenHandler implements Initiali
         order.setInstruction(instructions.getText());
 
         //create delivery method screen
-        BaseScreenHandler DeliveryMethodsScreenHandler = new DeliveryMethodsScreenHandler(this.stage, Configs.DELIVERY_METHODS_PATH, this.order);
+        BaseScreenController DeliveryMethodsScreenHandler = new DeliveryMethodsScreenController(this.stage, Configs.DELIVERY_METHODS_PATH, this.order);
         DeliveryMethodsScreenHandler.setPreviousScreen(this);
         DeliveryMethodsScreenHandler.setHomeScreenHandler(homeScreenHandler);
         DeliveryMethodsScreenHandler.setScreenTitle("Delivery method screen");

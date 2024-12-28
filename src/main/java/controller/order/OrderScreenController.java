@@ -1,6 +1,8 @@
 package controller.order;
 
 import controller.OrderController;
+import controller.common.BaseScreenController;
+import controller.payment.ResultScreenController;
 import entity.order.Order;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -9,14 +11,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import utils.Configs;
-import controller.common.BaseScreenHandler;
-import controller.payment.ResultScreenHandler;
 
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class OrderScreenHandler extends BaseScreenHandler {
+public class OrderScreenController extends BaseScreenController {
 
     @FXML
     private ImageView aimsImage;
@@ -27,7 +27,7 @@ public class OrderScreenHandler extends BaseScreenHandler {
     @FXML
     private VBox vboxOrder;
 
-    public OrderScreenHandler(Stage stage, String screenPath) throws IOException {
+    public OrderScreenController(Stage stage, String screenPath) throws IOException {
         super(stage, screenPath);
         File file = new File("assets/images/Logo.png");
         Image im = new Image(file.toURI().toString());
@@ -40,7 +40,7 @@ public class OrderScreenHandler extends BaseScreenHandler {
     public OrderController getBController() {
         return (OrderController) super.getBController();
     }
-    public void show(BaseScreenHandler prevScreen) throws SQLException {
+    public void show(BaseScreenController prevScreen) throws SQLException {
         setPreviousScreen(prevScreen);
         setScreenTitle("Order Screen");
 
@@ -56,7 +56,7 @@ public class OrderScreenHandler extends BaseScreenHandler {
             for (var cm : listOrders) {
 
 
-                OrderMediaHandler orderMediaHandler = new OrderMediaHandler(Configs.ORDER_MEDIA_PATH, this);
+                OrderMediaController orderMediaHandler = new OrderMediaController(Configs.ORDER_MEDIA_PATH, this);
                 orderMediaHandler.setOrder(cm);
 
                 // add spinner
@@ -69,7 +69,7 @@ public class OrderScreenHandler extends BaseScreenHandler {
 
     public void handleRejectOrder(Order order) throws IOException {
         var response = getBController().cancelOrder(order);
-        BaseScreenHandler resultScreen = new ResultScreenHandler(this.stage, Configs.RESULT_SCREEN_PATH,
+        BaseScreenController resultScreen = new ResultScreenController(this.stage, Configs.RESULT_SCREEN_PATH,
                 response.getResult(), response.getMessage());
 
         resultScreen.setPreviousScreen(this);

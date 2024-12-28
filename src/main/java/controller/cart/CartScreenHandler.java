@@ -1,10 +1,11 @@
-package views.screen.cart;
+package controller.cart;
 
 import common.exception.MediaNotAvailableException;
 import common.exception.PlaceOrderException;
 import controller.PlaceOrderController;
-import controller.ViewCartController;
 import entity.cart.CartMedia;
+import entity.cart.Cart;
+import controller.BaseController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -104,13 +105,6 @@ public class CartScreenHandler extends BaseScreenHandler {
 
     //Khong xac dinh coupling
     //Sequential Cohesion
-    /**
-     * @return ViewCartController
-     */
-    public ViewCartController getBController() {
-        return (ViewCartController) super.getBController();
-    }
-
 
     //Khong xac dinh coupling
     //Functional Cohesion
@@ -121,11 +115,18 @@ public class CartScreenHandler extends BaseScreenHandler {
     public void show(BaseScreenHandler prevScreen) throws SQLException {
         setPreviousScreen(prevScreen);
         setScreenTitle("Cart Screen");
-        getBController().checkAvailabilityOfProduct();
+        checkAvailabilityOfProduct();
         displayCartWithMediaAvailability();
-        show();
+        super.show();
     }
 
+    public List<CartMedia> getListCartMedia() {
+        return Cart.getCart().getListMedia();
+    }
+
+    public void checkAvailabilityOfProduct() throws SQLException {
+        Cart.getCart().checkAvailabilityOfProduct();
+    }
 
     //Control coupling
     //Procedural Cohesion
@@ -169,24 +170,29 @@ public class CartScreenHandler extends BaseScreenHandler {
      * @throws SQLException
      */
     public void updateCart() throws SQLException {
-        getBController().checkAvailabilityOfProduct();
+        checkAvailabilityOfProduct();
         displayCartWithMediaAvailability();
+    }
+
+    public int getCartSubtotal() {
+        return Cart.getCart().calSubtotal();
     }
 
     //Khong xac dinh coupling
     //Functional Cohesion
     void updateCartAmount() {
-        // calculate subtotal and amount
-        int subtotal = getBController().getCartSubtotal();
+        // Calculate subtotal and amount
+        int subtotal = getCartSubtotal();
         int vat = (int) ((Configs.PERCENT_VAT / 100) * subtotal);
         int amount = subtotal + vat;
 
-
-        // update subtotal and amount of Cart
+        // Update subtotal and amount of Cart
         labelSubtotal.setText(Utils.getCurrencyFormat(subtotal));
         labelVAT.setText(Utils.getCurrencyFormat(vat));
         labelAmount.setText(Utils.getCurrencyFormat(amount));
     }
+
+
     //Control Coupling
     //Functional Cohesion
     private void displayCartWithMediaAvailability() {
@@ -194,7 +200,7 @@ public class CartScreenHandler extends BaseScreenHandler {
         vboxCart.getChildren().clear();
 
         // get list media of cart after check availability
-        List lstMedia = getBController().getListCartMedia();
+        List lstMedia = getListCartMedia();
 
         try {
             for (Object cm : lstMedia) {

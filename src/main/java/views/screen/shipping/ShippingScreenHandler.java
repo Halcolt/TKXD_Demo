@@ -94,10 +94,10 @@ public class ShippingScreenHandler extends BaseScreenHandler implements Initiali
             return;
 
         }
-        if (!placeOrderCtrl.validateContainLetterAndNoEmpty(address.getText())) {
-            PopupScreen.error("Address is not valid!");
-            return;
-        }
+//        if (!placeOrderCtrl.validateContainLetterAndNoEmpty(address.getText())) {
+//            PopupScreen.error("Address is not valid!");
+//            return;
+//        }
         if (province.getValue() == null) {
             PopupScreen.error("Province is empty!");
             return;
@@ -117,16 +117,6 @@ public class ShippingScreenHandler extends BaseScreenHandler implements Initiali
         order.setProvince(province.getValue());
         order.setAddress(address.getText());
         order.setInstruction(instructions.getText());
-
-
-//        // // create invoice screen
-//        Invoice invoice = getBController().createInvoice(order);
-//        BaseScreenHandler InvoiceScreenHandler = new InvoiceScreenHandler(this.stage, Configs.INVOICE_SCREEN_PATH, invoice);
-//        InvoiceScreenHandler.setPreviousScreen(this);
-//        InvoiceScreenHandler.setHomeScreenHandler(homeScreenHandler);
-//        InvoiceScreenHandler.setScreenTitle("Invoice Screen");
-//        InvoiceScreenHandler.setBController(getBController());
-//        InvoiceScreenHandler.show();
 
         //create delivery method screen
         BaseScreenHandler DeliveryMethodsScreenHandler = new DeliveryMethodsScreenHandler(this.stage, Configs.DELIVERY_METHODS_PATH, this.order);

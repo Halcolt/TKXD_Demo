@@ -4,10 +4,7 @@ import common.exception.ViewCartException;
 import entity.cart.Cart;
 import entity.cart.CartMedia;
 import entity.media.Media;
-//import controller.HomeController;
-import controller.ViewCartController;
-import entity.cart.Cart;
-import entity.media.Media;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -20,7 +17,7 @@ import javafx.stage.Stage;
 import utils.Configs;
 import utils.Utils;
 import controller.common.BaseScreenHandler;
-import views.screen.cart.CartScreenHandler;
+import controller.cart.CartScreenHandler;
 
 import java.io.File;
 import java.io.IOException;
@@ -72,17 +69,12 @@ public class HomeScreenHandler extends BaseScreenHandler implements Initializabl
     private int numberMediaPerPage = 12;
     private int currentPage;
 
-    /**
-     * @return Label
-     */
 //Functional Cohesion
     public Label getNumMediaCartLabel() {
         return this.numMediaInCart;
     }
 
-    /**
-     * @return HomeController
-     */
+
 //Functional Cohesion
 
     @Override
@@ -96,10 +88,6 @@ public class HomeScreenHandler extends BaseScreenHandler implements Initializabl
         return Cart.getCart().checkMediaInCart(media);
     }
 
-    /**
-     * @param arg0
-     * @param arg1
-     */
     @Override
 // Control Coupling
 // Control Cohesion
@@ -117,7 +105,7 @@ public class HomeScreenHandler extends BaseScreenHandler implements Initializabl
             try {
                 var cartScreen = new CartScreenHandler(this.stage, Configs.CART_SCREEN_PATH);
                 cartScreen.setHomeScreenHandler(this);
-                cartScreen.setBController(new ViewCartController());
+//                cartScreen.setBController(new ViewCartController());
                 cartScreen.show(this);
             } catch (IOException | SQLException e1) {
                 throw new ViewCartException(Arrays.toString(e1.getStackTrace()).replaceAll(", ", "\n"));
@@ -252,7 +240,5 @@ public class HomeScreenHandler extends BaseScreenHandler implements Initializabl
         loadScreen();
         addMediaHome(GetMediaPaged(currentPage - 1));
     }
-
-
 
 }

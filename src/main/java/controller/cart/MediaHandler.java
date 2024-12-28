@@ -1,4 +1,4 @@
-package views.screen.cart;
+package controller.cart;
 
 import common.exception.MediaUpdateException;
 import common.exception.ViewCartException;

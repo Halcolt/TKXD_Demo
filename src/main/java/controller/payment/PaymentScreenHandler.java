@@ -1,4 +1,4 @@
-package views.screen.payment;
+package controller.payment;
 
 import controller.PaymentController;
 import entity.invoice.Invoice;

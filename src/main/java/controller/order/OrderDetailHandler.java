@@ -1,4 +1,4 @@
-package views.screen.order;
+package controller.order;
 
 import controller.OrderController;
 import entity.order.Order;

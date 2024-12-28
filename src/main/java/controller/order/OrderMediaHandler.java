@@ -1,4 +1,4 @@
-package views.screen.order;
+package controller.order;
 import entity.order.Order;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

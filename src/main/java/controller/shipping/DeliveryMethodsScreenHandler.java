@@ -1,4 +1,4 @@
-package views.screen.shipping;
+package controller.shipping;
 
 import controller.PlaceOrderController;
 import controller.PlaceRushOrderController;
@@ -12,7 +12,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import utils.Configs;
 import controller.common.BaseScreenHandler;
-import views.screen.invoice.InvoiceScreenHandler;
+import controller.invoice.InvoiceScreenHandler;
 
 import java.io.IOException;
 

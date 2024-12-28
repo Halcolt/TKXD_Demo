@@ -1,4 +1,4 @@
-package views.screen.payment;
+package controller.payment;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

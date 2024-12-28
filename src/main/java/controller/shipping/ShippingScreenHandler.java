@@ -1,4 +1,4 @@
-package views.screen.shipping;
+package controller.shipping;
 
 import common.exception.InvalidDeliveryInfoException;
 import controller.PlaceOrderController;
@@ -14,7 +14,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import utils.Configs;
 import controller.common.BaseScreenHandler;
-import views.screen.popup.PopupScreen;
+import controller.popup.PopupScreen;
 
 import java.io.IOException;
 import java.net.URL;

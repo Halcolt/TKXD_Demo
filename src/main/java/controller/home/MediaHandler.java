@@ -13,7 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import utils.Utils;
 import controller.common.FXMLScreenHandler;
-import views.screen.popup.PopupScreen;
+import controller.popup.PopupScreen;
 
 import java.io.File;
 import java.io.IOException;

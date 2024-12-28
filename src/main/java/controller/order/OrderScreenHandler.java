@@ -1,4 +1,4 @@
-package views.screen.order;
+package controller.order;
 
 import controller.OrderController;
 import entity.order.Order;
@@ -10,7 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import utils.Configs;
 import controller.common.BaseScreenHandler;
-import views.screen.payment.ResultScreenHandler;
+import controller.payment.ResultScreenHandler;
 
 import java.io.File;
 import java.io.IOException;

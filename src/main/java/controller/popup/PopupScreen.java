@@ -1,4 +1,4 @@
-package views.screen.popup;
+package controller.popup;
 
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;

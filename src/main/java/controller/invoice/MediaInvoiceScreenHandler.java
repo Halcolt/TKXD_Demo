@@ -1,4 +1,4 @@
-package views.screen.invoice;
+package controller.invoice;
 
 import entity.order.OrderMedia;
 import javafx.fxml.FXML;

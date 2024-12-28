@@ -1,4 +1,4 @@
-package views.screen.invoice;
+package controller.invoice;
 
 import common.exception.ProcessInvoiceException;
 import controller.PaymentController;
@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 import utils.Configs;
 import utils.Utils;
 import controller.common.BaseScreenHandler;
-import views.screen.payment.PaymentScreenHandler;
+import controller.payment.PaymentScreenHandler;
 
 import java.io.IOException;
 import java.sql.SQLException;

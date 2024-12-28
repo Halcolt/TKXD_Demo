@@ -5,7 +5,6 @@ import common.exception.PlaceOrderException;
 import controller.PlaceOrderController;
 import entity.cart.CartMedia;
 import entity.cart.Cart;
-import controller.BaseController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -16,8 +15,8 @@ import javafx.stage.Stage;
 import utils.Configs;
 import utils.Utils;
 import controller.common.BaseScreenHandler;
-import views.screen.popup.PopupScreen;
-import views.screen.shipping.ShippingScreenHandler;
+import controller.popup.PopupScreen;
+import controller.shipping.ShippingScreenHandler;
 
 import java.io.File;
 import java.io.IOException;

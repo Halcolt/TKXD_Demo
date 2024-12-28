@@ -1,6 +1,5 @@
 package controller.common;
 
-import controller.AccountController;
 import controller.BaseController;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -14,7 +13,6 @@ public class BaseScreenHandler extends FXMLScreenHandler {
     protected final Stage stage;
     protected HomeScreenHandler homeScreenHandler;
     protected Hashtable<String, String> messages;
-    protected AccountController accountController;
     private Scene scene;
     private BaseScreenHandler prev;
     private BaseController bController;
@@ -23,14 +21,13 @@ public class BaseScreenHandler extends FXMLScreenHandler {
     private BaseScreenHandler(String screenPath) throws IOException {
         super(screenPath);
         this.stage = new Stage();
-        accountController = AccountController.getAccountController();
     }
 
 
     public BaseScreenHandler(Stage stage, String screenPath) throws IOException {
         super(screenPath);
         this.stage = stage;
-        accountController = AccountController.getAccountController();
+//        accountController = AccountController.getAccountController();
     }
 
     /**
@@ -77,9 +74,6 @@ public class BaseScreenHandler extends FXMLScreenHandler {
         this.bController = bController;
     }
 
-    public void setBController(AccountController accountController) {
-        this.accountController = accountController;
-    }
 
 
     /**

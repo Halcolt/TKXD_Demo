@@ -4,7 +4,7 @@ import controller.AccountController;
 import controller.BaseController;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import views.screen.home.HomeScreenHandler;
+import controller.home.HomeScreenHandler;
 
 import java.io.IOException;
 import java.util.Hashtable;

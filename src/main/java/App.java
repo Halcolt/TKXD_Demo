@@ -1,7 +1,7 @@
 import javafx.application.Application;
 import javafx.stage.Stage;
 import utils.Configs;
-import views.screen.home.HomeScreenHandler;
+import controller.home.HomeScreenHandler;
 import java.io.IOException;
 
 public class App extends Application {

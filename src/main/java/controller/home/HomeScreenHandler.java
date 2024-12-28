@@ -1,7 +1,10 @@
-package views.screen.home;
+package controller.home;
 
 import common.exception.ViewCartException;
-import controller.HomeController;
+import entity.cart.Cart;
+import entity.cart.CartMedia;
+import entity.media.Media;
+//import controller.HomeController;
 import controller.ViewCartController;
 import entity.cart.Cart;
 import entity.media.Media;
@@ -81,15 +84,16 @@ public class HomeScreenHandler extends BaseScreenHandler implements Initializabl
      * @return HomeController
      */
 //Functional Cohesion
-    public HomeController getBController() {
-        return (HomeController) super.getBController();
-    }
 
     @Override
 //Sequential Cohesion
     public void show() {
         numMediaInCart.setText(String.valueOf(Cart.getCart().getListMedia().size()) + " media");
         super.show();
+    }
+
+    public CartMedia checkMediaInCart(Media media) {
+        return Cart.getCart().checkMediaInCart(media);
     }
 
     /**
@@ -102,7 +106,6 @@ public class HomeScreenHandler extends BaseScreenHandler implements Initializabl
     public void initialize(URL arg0, ResourceBundle arg1) {
         numberMediaPerPage = 12;
         currentPage = 1;
-        setBController(new HomeController());
         loadScreen();
 
         aimsImage.setOnMouseClicked(e -> {
@@ -127,9 +130,14 @@ public class HomeScreenHandler extends BaseScreenHandler implements Initializabl
         addMenuItem(2, "CD", splitMenuBtnSearch);
     }
 
+
+    public List<Media> getAllMedia() throws SQLException {
+        return new Media().getAllMedia();
+    }
+
     private void loadScreen() {
         try {
-            List medium = getBController().getAllMedia();
+            List medium = getAllMedia();
             this.homeItems = new ArrayList<>();
             for (Object object : medium) {
                 Media media = (Media) object;
@@ -178,7 +186,7 @@ public class HomeScreenHandler extends BaseScreenHandler implements Initializabl
     /**
      * @param items
      */
-//Data Coupling 
+//Data Coupling
 //Data Cohesion
     public void addMediaHome(List items) {
         ArrayList mediaItems = (ArrayList) ((ArrayList) items).clone();
@@ -206,7 +214,7 @@ public class HomeScreenHandler extends BaseScreenHandler implements Initializabl
      * @param menuButton
      */
 
-// Data Coupling 
+// Data Coupling
 // Data Cohesion
     private void addMenuItem(int position, String text, MenuButton menuButton) {
         MenuItem menuItem = new MenuItem();
@@ -244,5 +252,7 @@ public class HomeScreenHandler extends BaseScreenHandler implements Initializabl
         loadScreen();
         addMediaHome(GetMediaPaged(currentPage - 1));
     }
+
+
 
 }

@@ -6,35 +6,16 @@ import entity.media.Media;
 
 import java.util.List;
 
-
-/**
- * This class is the base controller for our AIMS project.
- *
- * @author nguyenlm
- */
 public class BaseController {
 
-    /**
-     * The method checks whether the Media in Cart, if it were in, we will return
-     * the CartMedia else return null.
-     *
-     * @param media media object
-     * @return CartMedia or null
-     */
-    //Functional Cohesion
-    //Control Coupling
     public CartMedia checkMediaInCart(Media media) {
+        if (media == null) {
+            throw new IllegalArgumentException("Media cannot be null.");
+        }
         return Cart.getCart().checkMediaInCart(media);
     }
 
-    /**
-     * This method gets the list of items in cart.
-     *
-     * @return List[CartMedia]
-     */
-    //Functional Cohesion
-    //Không xác đinh coupling
-    public List getListCartMedia() {
+    public List<CartMedia> getListCartMedia() {
         return Cart.getCart().getListMedia();
     }
 }

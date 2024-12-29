@@ -94,10 +94,12 @@ public class ShippingScreenController extends BaseScreenController implements In
             return;
 
         }
-//        if (!placeOrderCtrl.validateContainLetterAndNoEmpty(address.getText())) {
-//            PopupScreenController.error("Address is not valid!");
-//            return;
-//        }
+
+        if (!placeOrderCtrl.validateContainLetterAndNoEmpty(address.getText())) {
+            PopupScreenController.error("Address is not valid!");
+            return;
+        }
+
         if (province.getValue() == null) {
             PopupScreenController.error("Province is empty!");
             return;

@@ -10,200 +10,109 @@ import utils.Utils;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 import java.util.logging.Logger;
 
 public class PlaceOrderController extends BaseController {
 
-    /**
-     * Just for logging purpose
-     */
-    private static Logger LOGGER = Utils.getLogger(PlaceOrderController.class.getName());
+    private static final Logger LOGGER = Utils.getLogger(PlaceOrderController.class.getName());
 
-    /**
-     * This method checks the avalibility of product when user click PlaceOrder
-     * button
-     *
-     * @throws SQLException
-     */
-    //Coincidental Cohesion
-    //Không xác định coupling
-    public void placeOrder() throws SQLException {
+    public void checkProductAvailability() throws SQLException {
         Cart.getCart().checkAvailabilityOfProduct();
     }
 
-    /**
-     * This method creates the new Order based on the Cart
-     *
-     * @return Order
-     * @throws SQLException
-     */
-
-    //Functional Cohesion
-    //Control Coupling
     public Order createOrder() throws SQLException {
         Order order = new Order();
-        for (Object object : Cart.getCart().getListMedia()) {
-            CartMedia cartMedia = (CartMedia) object;
-            OrderMedia orderMedia = new OrderMedia(cartMedia.getMedia(),
+        List<CartMedia> cartMediaList = Cart.getCart().getListMedia();
+        for (CartMedia cartMedia : cartMediaList) {
+            OrderMedia orderMedia = new OrderMedia(
+                    cartMedia.getMedia(),
                     cartMedia.getQuantity(),
-                    cartMedia.getPrice());
+                    cartMedia.getPrice()
+            );
             order.getlstOrderMedia().add(orderMedia);
         }
         return order;
     }
 
-    /**
-     * This method creates the new Invoice based on order
-     *
-     * @param order
-     * @return Invoice
-     */
-
-    //Functional Cohesion
-    //Control coupling
-    public Invoice createInvoice(Order order) {
-
-        order.createOrderEntity();
-        return new Invoice(order);
+    public void placeOrder() throws SQLException {
+        Cart.getCart().checkAvailabilityOfProduct();
     }
 
-    /**
-     * This method takes responsibility for processing the shipping info from user
-     *
-     * @param info
-     * @throws InterruptedException
-     * @throws IOException
-     */
-
-    //Coincidental Cohesion
-    //Data Coupling
-    public void processDeliveryInfo(HashMap info) throws InterruptedException, IOException {
-        validateDeliveryInfo(info);
-    }
-
-    /**
-     * The method validates the info
-     *
-     * @param info
-     * @throws InterruptedException
-     * @throws IOException
-     */
-    //Không xác định cohesion
-    //Không xác dịnh coupling
-    public void validateDeliveryInfo(HashMap<String, String> info) throws InterruptedException, IOException {
-
-    }
-
-
-    /**
-     * @param phoneNumber
-     * @return boolean
-     */
-
-    //Functional Cohesion
-    //Control Coupling
-    public boolean validatePhoneNumber(String phoneNumber) {
-        if (phoneNumber.length() != 10)
-            return false;
-        if (Character.compare(phoneNumber.charAt(0), '0') != 0)
-            return false;
-        try {
-            Long.parseUnsignedLong(phoneNumber);
-        } catch (NumberFormatException e) {
-            return false;
-        }
-
-        return true;
-    }
-
-
-    /**
-     * @param name
-     * @return boolean
-     */
-
-    //Functional Cohesion
-    //Control Coupling
     public boolean validateContainLetterAndNoEmpty(String name) {
-        // Check name is not null
         if (name == null)
             return false;
-        // Check if contain leter space only
         if (name.trim().length() == 0)
             return false;
-        // Check if contain only leter and space
         if (name.matches("^[a-zA-Z ]*$") == false)
             return false;
         return true;
     }
 
+    public Invoice createInvoice(Order order) {
+        order.createOrderEntity();
+        return new Invoice(order);
+    }
 
-    /**
-     * This method calculates the shipping fees of order
-     *
-     * @param order
-     * @return shippingFee
-     */
+    public void processDeliveryInfo(HashMap<String, String> info) throws InterruptedException, IOException {
+        validateDeliveryInfo(info);
+    }
 
-    //Không xác định cohesion
-    //không xác định coupling
+    private void validateDeliveryInfo(HashMap<String, String> info) {
+        if (info == null || info.isEmpty()) {
+            throw new IllegalArgumentException("can not be empty");
+        }
+
+        String address = info.get("address");
+        String phoneNumber = info.get("phoneNumber");
+
+        if (!validateAddress(address)) {
+            throw new IllegalArgumentException("Invalid address.");
+        }
+        if (validatePhoneNumber(phoneNumber)) {
+            throw new IllegalArgumentException("Invalid phone number.");
+        }
+    }
+
+    public boolean validatePhoneNumber(String phoneNumber) {
+        if (phoneNumber == null || phoneNumber.length() != 10 || !phoneNumber.startsWith("0")) {
+            return true;
+        }
+
+        try {
+            Long.parseUnsignedLong(phoneNumber);
+        } catch (NumberFormatException e) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private boolean validateAddress(String address) {
+        return address != null && !address.trim().isEmpty() && address.matches("^[a-zA-Z0-9, ]+$");
+    }
+
     public int calculateShippingFee(int amount) {
         Random rand = new Random();
-        int fees = (int) (((rand.nextFloat() * 10) / 100) * amount);
-        return fees;
+        return (int) (((rand.nextFloat() * 10) / 100) * amount);
     }
 
-    /**
-     * This method get product available place rush order media
-     *
-     * @param order
-     * @return media
-     * @throws SQLException
-     */
-
-    //Functional Cohesion
-    //Control Coupling
-    public Media getProductAvailablePlaceRush(Order order) throws SQLException {
-        Media media = new Media();
-        for (OrderMedia pd : order.getlstOrderMedia()) {
-            // CartMedia cartMedia = (CartMedia) object;
-            if( validateMediaPlaceRushorder()){
-                media = pd.getMedia();
+    public Media getProductAvailableForRushOrder(Order order) throws SQLException {
+        for (OrderMedia orderMedia : order.getlstOrderMedia()) {
+            if (isMediaEligibleForRushOrder(orderMedia.getMedia())) {
+                return orderMedia.getMedia();
             }
         }
-        return media;
+        return null;
     }
 
-
-    /**
-     * @param province
-     * @param address
-     * @return boolean
-     */
-
-    //Functional Cohesion
-    //Control Coupling
-    public boolean validateAddressPlaceRushOrder(String province, String address) {
-        if (!validateContainLetterAndNoEmpty(address))
-            return false;
-        if (!province.equals("Hà Nội"))
-            return false;
-        return true;
+    private boolean isMediaEligibleForRushOrder(Media media) {
+        return media != null && Media.getIsSupportedPlaceRushOrder();
     }
 
-
-    /**
-     * @return boolean
-     */
-
-    //Functional Cohesion
-    //Control Coupling
-    public boolean validateMediaPlaceRushorder() {
-        if (Media.getIsSupportedPlaceRushOrder())
-            return true;
-        return false;
+    public boolean validateRushOrderAddress(String province, String address) {
+        return "Hà Nội".equals(province) && validateAddress(address);
     }
 }

@@ -11,92 +11,79 @@ import utils.enums.OrderStatus;
 
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Map;
 
-/**
- * This {@code PaymentController} class control the flow of the payment process
- * in our AIMS Software.
- *
- * @author hieud
- */
 public class PaymentController extends BaseController {
 
-
-    /**
-     * Represent the Interbank subsystem
-     */
-    private VnPayInterface vnPayService;
-
-
-    public PaymentController(){
+    private final VnPayInterface vnPayService;
+    public PaymentController() {
         this.vnPayService = new VnPaySubsystemController();
     }
 
-    //Control Coupling
     public Map<String, String> makePayment(Map<String, String> res, int orderId) {
-        Map<String, String> result = new Hashtable<String, String>();
-        PaymentTransaction trans = null;
-        try {
+        Map<String, String> result = new HashMap<>();
+        PaymentTransaction transaction = null;
 
-            trans = this.vnPayService.makePaymentTransaction(res);
-            if(trans != null) trans.save(orderId);
-            var order = new Order();
-            if(trans.getErrorCode().equals("00")){
-                result.put("RESULT", "PAYMENT SUCCESSFUL!");
-                result.put("MESSAGE", "You have succesffully paid the order!");
-                order.updateStatus(OrderStatus.Paid, orderId);
-            } else{
-                var ex = TransactionExceptionHolder.getInstance().getException(trans.getErrorCode());
-                if(ex != null){
-                    result.put("MESSAGE", ex.getMessage());
-                    result.put("RESULT", "PAYMENT FAILED!");
-                    order.updateStatus(OrderStatus.Rejected, orderId);
-                }else{
-                    result.put("MESSAGE", "Unknown error, contact to AIMS Team to get helping please.");
-                    result.put("RESULT", "PAYMENT FAILED!");
-                    order.updateStatus(OrderStatus.Rejected, orderId);
-                }
+        try {
+            transaction = this.vnPayService.makePaymentTransaction(res);
+
+            if (transaction != null) {
+                transaction.save(orderId);
             }
 
+            handleTransactionResult(transaction, orderId, result);
 
-        } catch ( UnrecognizedException ex) {
-            result.put("MESSAGE", "Fail occur, contact to AIMS Team to get helping please.");
+        } catch (UnrecognizedException e) {
             result.put("RESULT", "PAYMENT FAILED!");
-
+            result.put("MESSAGE", "A failure occurred. Please contact AIMS support.");
+        } catch (ParseException e) {
+            throw new RuntimeException("Error parsing transaction data.", e);
         }
-        catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
-
 
         return result;
     }
 
-    /**
-     * Gen url thanh toán vnPay
-     * @param amount
-     * @param content
-     * @return
-     */
+    private void handleTransactionResult(PaymentTransaction transaction, int orderId, Map<String, String> result) {
+        Order order = new Order();
 
-    //Functional Cohesion
-    //Data Coupling
-    public String getUrlPay(int amount, String content){
-
-        String url = null;
-
-
-        try {
-            url = this.vnPayService.generatePayUrl(amount, content);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        if (transaction == null) {
+            result.put("RESULT", "PAYMENT FAILED!");
+            result.put("MESSAGE", "Transaction failed due to null response.");
+            order.updateStatus(OrderStatus.Rejected, orderId);
+            return;
         }
-        return url;
+
+        if ("00".equals(transaction.getErrorCode())) {
+            result.put("RESULT", "PAYMENT SUCCESSFUL!");
+            result.put("MESSAGE", "You have successfully paid for the order.");
+            order.updateStatus(OrderStatus.Paid, orderId);
+        } else {
+            handleTransactionError(transaction, orderId, result, order);
+        }
     }
 
-    //Functional Cohesion
-    //Control Coupling
+    private void handleTransactionError(PaymentTransaction transaction, int orderId, Map<String, String> result, Order order) {
+        var exception = TransactionExceptionHolder.getInstance().getException(transaction.getErrorCode());
+
+        if (exception != null) {
+            result.put("MESSAGE", exception.getMessage());
+        } else {
+            result.put("MESSAGE", "Unknown error occurred. Please contact AIMS support.");
+        }
+
+        result.put("RESULT", "PAYMENT FAILED!");
+        order.updateStatus(OrderStatus.Rejected, orderId);
+    }
+
+    public String getUrlPay(int amount, String content) {
+        try {
+            return this.vnPayService.generatePayUrl(amount, content);
+        } catch (IOException e) {
+            throw new RuntimeException("Error generating payment URL.", e);
+        }
+    }
+
     public void emptyCart() {
         Cart.getCart().emptyCart();
     }

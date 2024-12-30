@@ -12,7 +12,7 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import utils.Utils;
-import controller.common.FXMLScreenController;
+import controller.common.BaseScreenController;
 import controller.popup.PopupScreenController;
 
 import java.io.File;
@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Logger;
 
-public class MediaController extends FXMLScreenController {
+public class MediaController extends BaseScreenController {
 
     private static Logger LOGGER = Utils.getLogger(MediaController.class.getName());
     @FXML
@@ -42,7 +42,7 @@ public class MediaController extends FXMLScreenController {
     private HomeScreenController home;
 
     public MediaController(String screenPath, Media media, HomeScreenController home) throws SQLException, IOException {
-        super(screenPath);
+        super(home.getStage(), screenPath);
         this.media = media;
         this.home = home;
         deleteBtn.setOnMouseClicked(e -> {

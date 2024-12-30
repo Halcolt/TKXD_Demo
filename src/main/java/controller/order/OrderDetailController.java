@@ -1,12 +1,12 @@
 package controller.order;
 
-import controller.OrderController;
 import controller.common.BaseScreenController;
 import entity.order.Order;
 import entity.order.entities.DetailResponse;
 import javafx.fxml.FXML;
 import javafx.stage.Stage;
 import javafx.scene.control.TextField;
+import subsystem.vnPay.VnPaySubsystemController;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -48,13 +48,8 @@ public class OrderDetailController extends BaseScreenController {
 
     public OrderDetailController(Stage stage, String screenPath, Order order) throws IOException {
         super(stage, screenPath);
-        super.setBController(new OrderController());
         this.order = order;
     }
-    public OrderController getBController() {
-        return (OrderController) super.getBController();
-    }
-
 
     public void initScreen(DetailResponse response) {
         System.out.println(response.toString());
@@ -75,7 +70,9 @@ public class OrderDetailController extends BaseScreenController {
         setPreviousScreen(prevScreen);
         setScreenTitle("Order Detail Screen");
 
-        initScreen(getBController().getDetailOrder(order));
+        VnPaySubsystemController vnPayService = new VnPaySubsystemController();
+        initScreen(vnPayService.getDetailTransaction(order));
+
         show();
     }
 
@@ -83,7 +80,8 @@ public class OrderDetailController extends BaseScreenController {
 
         stage.setTitle("Order Detail Screen");
 
-        initScreen(getBController().getDetailOrder(order));
+        VnPaySubsystemController vnPayService = new VnPaySubsystemController();
+        initScreen(vnPayService.getDetailTransaction(order));
         show();
     }
 }

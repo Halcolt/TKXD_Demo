@@ -10,22 +10,19 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import utils.Configs;
 import utils.Utils;
-import controller.common.FXMLScreenController;
+import controller.common.BaseScreenController;
 
-import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.logging.Logger;
 
-// SRP: MediaController xu ly nhieu tac vu cung luc: xu ly giao dien, ket noi database ,..
-public class MediaController extends FXMLScreenController {
+public class MediaController extends BaseScreenController {
 
     private static Logger LOGGER = Utils.getLogger(MediaController.class.getName());
 
@@ -60,37 +57,31 @@ public class MediaController extends FXMLScreenController {
     private Spinner<Integer> spinner;
     private CartScreenController cartScreen;
 
-    //Data Coupling
-    //Functional Cohesion
+    // Functional Cohesion
     public MediaController(String screenPath, CartScreenController cartScreen) throws IOException {
-        super(screenPath);
+        super(cartScreen.getStage(), screenPath);
         this.cartScreen = cartScreen;
         hboxMedia.setAlignment(Pos.CENTER);
     }
 
-    //Data coupling
-    //Functional Cohesion
-    /**
-     * @param cartMedia
-     */
+    // Functional Cohesion
     public void setCartMedia(CartMedia cartMedia) {
         this.cartMedia = cartMedia;
         setMediaInfo();
     }
 
-    //Control coupling
-    //Functional Cohesion
+    // Functional Cohesion
     private void setMediaInfo() {
         title.setText(cartMedia.getMedia().getTitle());
         price.setText(Utils.getCurrencyFormat(cartMedia.getPrice()));
-        File file = new File(cartMedia.getMedia().getImageURL());
-        Image im = new Image(file.toURI().toString());
-        image.setImage(im);
+
+        // Use setImage from BaseScreenController
+        setImage(image, cartMedia.getMedia().getImageURL());
         image.setPreserveRatio(false);
         image.setFitHeight(110);
         image.setFitWidth(92);
 
-        // add delete button
+        // Add delete button functionality
         btnDelete.setFont(Configs.REGULAR_FONT);
         btnDelete.setOnMouseClicked(e -> {
             try {
@@ -106,37 +97,35 @@ public class MediaController extends FXMLScreenController {
         initializeSpinner();
     }
 
-    //Control Coupling
-    //Procedural Cohesion
+    // Procedural Cohesion
     private void initializeSpinner() {
-        SpinnerValueFactory<Integer> valueFactory = //
+        SpinnerValueFactory<Integer> valueFactory =
                 new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100, cartMedia.getQuantity());
-        spinner = new Spinner<Integer>(valueFactory);
+        spinner = new Spinner<>(valueFactory);
         spinner.setOnMouseClicked(e -> {
             try {
                 int numOfProd = this.spinner.getValue();
                 int remainQuantity = cartMedia.getMedia().getQuantity();
                 LOGGER.info("NumOfProd: " + numOfProd + " -- remainOfProd: " + remainQuantity);
                 if (numOfProd > remainQuantity) {
-                    LOGGER.info("product " + cartMedia.getMedia().getTitle() + " only remains " + remainQuantity + " (required " + numOfProd + ")");
-                    labelOutOfStock.setText("Sorry, Only " + remainQuantity + " remain in stock");
+                    LOGGER.info("Product " + cartMedia.getMedia().getTitle() + " only remains " + remainQuantity + " (required " + numOfProd + ")");
+                    labelOutOfStock.setText("Sorry, only " + remainQuantity + " remain in stock");
                     spinner.getValueFactory().setValue(remainQuantity);
                     numOfProd = remainQuantity;
                 }
 
-                // update quantity of mediaCart in useCart
+                // Update quantity of mediaCart in userCart
                 cartMedia.setQuantity(numOfProd);
 
-                // update the total of mediaCart
+                // Update the total of mediaCart
                 price.setText(Utils.getCurrencyFormat(numOfProd * cartMedia.getPrice()));
 
-                // update subtotal and amount of Cart
+                // Update subtotal and amount of Cart
                 cartScreen.updateCartAmount();
 
             } catch (SQLException e1) {
                 throw new MediaUpdateException(Arrays.toString(e1.getStackTrace()).replaceAll(", ", "\n"));
             }
-
         });
         spinnerFX.setAlignment(Pos.CENTER);
         spinnerFX.getChildren().add(this.spinner);

@@ -12,12 +12,12 @@ import utils.Configs;
 import utils.Utils;
 import utils.enums.OrderStatus;
 import utils.resources.Resource;
-import controller.common.FXMLScreenController;
+import controller.common.BaseScreenController;
 
 import java.io.File;
 import java.io.IOException;
 
-public class OrderMediaController extends FXMLScreenController {
+public class OrderMediaController extends BaseScreenController {
     @FXML
     private Label addess;
 
@@ -68,8 +68,8 @@ public class OrderMediaController extends FXMLScreenController {
 
     private OrderScreenController orderMediaHandler;
     private Order order;
-    public OrderMediaController(String screenPath, OrderScreenController orderScreenHandler) throws IOException {
-        super(screenPath);
+    public OrderMediaController(Stage stage, String screenPath, OrderScreenController orderScreenHandler) throws IOException {
+        super(stage, screenPath);
 
         this.orderMediaHandler = orderScreenHandler;
         detailOrderBtn.setOnMouseClicked(e -> {

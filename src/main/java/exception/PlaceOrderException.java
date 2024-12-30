@@ -1,4 +1,4 @@
-package common.exception;
+package exception;
 
 public class PlaceOrderException extends AimsException {
 

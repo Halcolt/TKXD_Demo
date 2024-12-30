@@ -1,6 +1,6 @@
-package common.exception.vnPayException;
+package exception.vnPayException;
 
-import common.exception.*;
+import exception.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,7 +11,7 @@ public class TransactionExceptionHolder {
     private Map<String, PaymentException> exceptions = new HashMap<>();
 
     private TransactionExceptionHolder() {
-        // Khởi tạo các common.exception và đưa vào Mape
+        // Khởi tạo các exception và đưa vào Mape
 
         exceptions.put("91", new TransactionNotDoneException());
         exceptions.put("02", new TransactionFailedException());

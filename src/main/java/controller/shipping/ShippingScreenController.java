@@ -1,6 +1,6 @@
 package controller.shipping;
 
-import common.exception.InvalidDeliveryInfoException;
+import exception.InvalidDeliveryInfoException;
 import controller.PlaceOrderController;
 import controller.common.BaseScreenController;
 import entity.order.Order;

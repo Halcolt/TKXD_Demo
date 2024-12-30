@@ -1,11 +1,10 @@
 package controller;
 
-import common.exception.PaymentException;
+import exception.PaymentException;
 import entity.order.entities.DetailResponse;
 import entity.payment.TransactionResult;
-import common.exception.vnPayException.ProcessingException;
+import exception.vnPayException.ProcessingException;
 import entity.order.Order;
-import javafx.scene.control.Alert;
 import subsystem.VnPayInterface;
 import entity.order.entities.RefundTransaction;
 import subsystem.vnPay.VnPaySubsystemController;
@@ -26,15 +25,6 @@ public class OrderController extends BaseController {
     }
 
 
-
-
-
-    /**
-     * this method gets all Order in DB and return back to display
-     *
-     *
-     *
-     */
    public List<Order> getOrders() {
        return  order.getListOrders();
    }

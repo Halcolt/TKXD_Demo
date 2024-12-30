@@ -1,6 +1,6 @@
 package controller.home;
 
-import common.exception.MediaNotAvailableException;
+import exception.MediaNotAvailableException;
 import entity.cart.Cart;
 import entity.cart.CartMedia;
 import entity.media.Media;

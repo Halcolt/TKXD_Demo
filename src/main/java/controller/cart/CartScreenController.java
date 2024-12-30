@@ -1,7 +1,7 @@
 package controller.cart;
 
-import common.exception.MediaNotAvailableException;
-import common.exception.PlaceOrderException;
+import exception.MediaNotAvailableException;
+import exception.PlaceOrderException;
 import controller.PlaceOrderController;
 import controller.common.BaseScreenController;
 import controller.shipping.ShippingScreenController;

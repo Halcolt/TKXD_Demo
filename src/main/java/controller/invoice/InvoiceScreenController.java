@@ -1,6 +1,6 @@
 package controller.invoice;
 
-import common.exception.ProcessInvoiceException;
+import exception.ProcessInvoiceException;
 import controller.PaymentController;
 import controller.common.BaseScreenController;
 import controller.payment.PaymentScreenController;

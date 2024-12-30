@@ -1,6 +1,6 @@
 package entity.cart;
 
-import common.exception.MediaNotAvailableException;
+import exception.MediaNotAvailableException;
 import entity.media.Media;
 
 import java.sql.SQLException;

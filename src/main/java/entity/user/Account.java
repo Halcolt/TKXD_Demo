@@ -3,14 +3,12 @@ package entity.user;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import common.exception.LoginFailedException;
-import common.exception.SignupFailedException;
+import exception.LoginFailedException;
+import exception.SignupFailedException;
 import entity.db.AIMSDB;
-import entity.media.Book;
 
 public class Account {
     private static final String PASSWORD_PATTERN =

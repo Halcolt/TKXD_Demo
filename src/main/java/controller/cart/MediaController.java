@@ -1,7 +1,7 @@
 package controller.cart;
 
-import common.exception.MediaUpdateException;
-import common.exception.ViewCartException;
+import exception.MediaUpdateException;
+import exception.ViewCartException;
 import entity.cart.Cart;
 import entity.cart.CartMedia;
 import javafx.fxml.FXML;

@@ -1,6 +1,6 @@
-package common.exception.vnPayException;
+package exception.vnPayException;
 
-import common.exception.PaymentException;
+import exception.PaymentException;
 
 ;
 

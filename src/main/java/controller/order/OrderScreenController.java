@@ -56,7 +56,8 @@ public class OrderScreenController extends BaseScreenController {
 
         try {
             for (var cm : listOrders) {
-                OrderMediaController orderMediaHandler = new OrderMediaController(Configs.ORDER_MEDIA_PATH, this);
+                // Pass the Stage object to the OrderMediaController
+                OrderMediaController orderMediaHandler = new OrderMediaController(this.stage, Configs.ORDER_MEDIA_PATH, this);
                 orderMediaHandler.setOrder(cm);
                 vboxOrder.getChildren().add(orderMediaHandler.getContent());
             }

@@ -6,15 +6,16 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import utils.Utils;
-import controller.common.FXMLScreenController;
+import controller.common.BaseScreenController;
 
 import java.io.IOException;
 import java.sql.SQLException;
 
 //Khong vi pham quy tac SOLID
 
-public class MediaInvoiceScreenController extends FXMLScreenController {
+public class MediaInvoiceScreenController extends BaseScreenController {
 
     @FXML
     private HBox hboxMedia;
@@ -44,8 +45,8 @@ public class MediaInvoiceScreenController extends FXMLScreenController {
 
     //Data Coupling
     //Functional Cohesion
-    public MediaInvoiceScreenController(String screenPath) throws IOException {
-        super(screenPath);
+    public MediaInvoiceScreenController(Stage stage, String screenPath) throws IOException {
+        super(stage, screenPath);
     }
 
     //Data Coupling

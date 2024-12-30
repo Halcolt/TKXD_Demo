@@ -78,7 +78,7 @@ public class InvoiceScreenController extends BaseScreenController {
         invoice.setAmount(amount);
         invoice.getOrder().getlstOrderMedia().forEach(orderMedia -> {
             try {
-                MediaInvoiceScreenController mis = new MediaInvoiceScreenController(Configs.INVOICE_MEDIA_SCREEN_PATH);
+                MediaInvoiceScreenController mis = new MediaInvoiceScreenController(this.stage, Configs.INVOICE_MEDIA_SCREEN_PATH);
                 mis.setOrderMedia((OrderMedia) orderMedia);
                 vboxItems.getChildren().add(mis.getContent());
             } catch (IOException | SQLException e) {

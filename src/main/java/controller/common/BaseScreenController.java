@@ -1,18 +1,25 @@
 package controller.common;
 
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 import controller.home.HomeScreenController;
 import entity.cart.Cart;
 import entity.cart.CartMedia;
 import entity.media.Media;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Hashtable;
 import java.util.List;
 
-public class BaseScreenController extends FXMLScreenController {
+public class BaseScreenController {
 
+    protected FXMLLoader loader;
+    protected AnchorPane content;
     protected final Stage stage;
     protected HomeScreenController homeScreenHandler;
     protected Hashtable<String, String> messages;
@@ -20,14 +27,15 @@ public class BaseScreenController extends FXMLScreenController {
     private BaseScreenController prev;
 
     // Constructor
-    private BaseScreenController(String screenPath) throws IOException {
-        super(screenPath);
-        this.stage = new Stage();
+    public BaseScreenController(Stage stage, String screenPath) throws IOException {
+        this.loader = new FXMLLoader(getClass().getResource(screenPath));
+        this.loader.setController(this);
+        this.content = loader.load();
+        this.stage = stage;
     }
 
-    public BaseScreenController(Stage stage, String screenPath) throws IOException {
-        super(screenPath);
-        this.stage = stage;
+    public Stage getStage() {
+        return this.stage;
     }
 
     // Navigation methods
@@ -47,8 +55,8 @@ public class BaseScreenController extends FXMLScreenController {
         this.stage.show();
     }
 
-    public void setScreenTitle(String string) {
-        this.stage.setTitle(string);
+    public void setScreenTitle(String title) {
+        this.stage.setTitle(title);
     }
 
     public void forward(Hashtable<String, String> messages) {
@@ -57,6 +65,21 @@ public class BaseScreenController extends FXMLScreenController {
 
     public void setHomeScreenHandler(HomeScreenController HomeScreenHandler) {
         this.homeScreenHandler = HomeScreenHandler;
+    }
+
+    // FXML methods from FXMLScreenController
+    public AnchorPane getContent() {
+        return this.content;
+    }
+
+    public FXMLLoader getLoader() {
+        return this.loader;
+    }
+
+    public void setImage(ImageView imageView, String path) {
+        File file = new File(path);
+        Image img = new Image(file.toURI().toString());
+        imageView.setImage(img);
     }
 
     // Cart methods from BaseController

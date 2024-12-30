@@ -1,13 +1,11 @@
 package controller.common;
 
-import controller.BaseController;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import controller.home.HomeScreenController;
 import entity.cart.Cart;
 import entity.cart.CartMedia;
 import entity.media.Media;
-
 
 import java.io.IOException;
 import java.util.Hashtable;
@@ -20,31 +18,23 @@ public class BaseScreenController extends FXMLScreenController {
     protected Hashtable<String, String> messages;
     private Scene scene;
     private BaseScreenController prev;
-    private BaseController bController;
 
-    //Data Coupling
+    // Constructor
     private BaseScreenController(String screenPath) throws IOException {
         super(screenPath);
         this.stage = new Stage();
     }
 
-
     public BaseScreenController(Stage stage, String screenPath) throws IOException {
         super(screenPath);
         this.stage = stage;
-//        accountController = AccountController.getAccountController();
     }
 
-    /**
-     * @return BaseScreenController
-     */
+    // Navigation methods
     public BaseScreenController getPreviousScreen() {
         return this.prev;
     }
 
-    /**
-     * @param prev
-     */
     public void setPreviousScreen(BaseScreenController prev) {
         this.prev = prev;
     }
@@ -61,45 +51,19 @@ public class BaseScreenController extends FXMLScreenController {
         this.stage.setTitle(string);
     }
 
-    public BaseController getBController() {
-        return this.bController;
-    }
-
-
-
-    /**
-     * @param bController
-     */
-    public void setBController(BaseController bController) {
-        this.bController = bController;
-    }
-
-
-
-    /**
-     * @param messages
-     */
-    public void forward(Hashtable messages) {
+    public void forward(Hashtable<String, String> messages) {
         this.messages = messages;
     }
 
-
-    /**
-     * @param HomeScreenHandler
-     */
     public void setHomeScreenHandler(HomeScreenController HomeScreenHandler) {
         this.homeScreenHandler = HomeScreenHandler;
     }
 
+    // Cart methods from BaseController
     public CartMedia checkMediaInCart(Media media) {
         return Cart.getCart().checkMediaInCart(media);
     }
 
-    /**
-     * Get the list of items in the Cart.
-     *
-     * @return List[CartMedia]
-     */
     public List<CartMedia> getListCartMedia() {
         return Cart.getCart().getListMedia();
     }

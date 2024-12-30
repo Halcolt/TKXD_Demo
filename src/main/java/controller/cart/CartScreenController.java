@@ -1,8 +1,9 @@
 package controller.cart;
 
+import entity.order.Order;
+import entity.order.OrderMedia;
 import exception.MediaNotAvailableException;
 import exception.PlaceOrderException;
-import controller.PlaceOrderController;
 import controller.common.BaseScreenController;
 import controller.shipping.ShippingScreenController;
 import entity.cart.CartMedia;
@@ -133,36 +134,50 @@ public class CartScreenController extends BaseScreenController {
      * @throws SQLException
      * @throws IOException
      */
+
+    public void placeOrder() throws SQLException {
+        Cart.getCart().checkAvailabilityOfProduct();
+    }
+
+    public Order createOrder() throws SQLException {
+        Order order = new Order();
+        for (Object object : Cart.getCart().getListMedia()) {
+            CartMedia cartMedia = (CartMedia) object;
+            OrderMedia orderMedia = new OrderMedia(cartMedia.getMedia(),
+                    cartMedia.getQuantity(),
+                    cartMedia.getPrice());
+            order.getlstOrderMedia().add(orderMedia);
+        }
+        return order;
+    }
+
     public void requestOrder() throws SQLException, IOException {
         try {
-            // create placeOrderController and process the order
-            var placeOrderController = new PlaceOrderController();
-            if (placeOrderController.getListCartMedia().size() == 0) {
+            if (getListCartMedia().size() == 0) {
                 PopupScreenController.error("You don't have anything to place");
                 return;
             }
 
-            placeOrderController.placeOrder();
+            placeOrder();
 
             // display available media
             displayCartWithMediaAvailability();
 
             // create order
-            var order = placeOrderController.createOrder();
+            var order = createOrder();
 
             // display shipping form
             ShippingScreenController ShippingScreenHandler = new ShippingScreenController(this.stage, Configs.SHIPPING_SCREEN_PATH, order);
             ShippingScreenHandler.setPreviousScreen(this);
             ShippingScreenHandler.setHomeScreenHandler(homeScreenHandler);
             ShippingScreenHandler.setScreenTitle("Shipping Screen");
-            ShippingScreenHandler.setBController(placeOrderController);
             ShippingScreenHandler.show();
 
         } catch (MediaNotAvailableException e) {
-            // if some media are not available then display cart and break usecase Place Order
             displayCartWithMediaAvailability();
         }
     }
+
 
     //Khong xac dinh coupling
     /**

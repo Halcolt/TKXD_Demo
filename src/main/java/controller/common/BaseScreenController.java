@@ -60,10 +60,12 @@ public class BaseScreenController extends FXMLScreenController {
     public void setScreenTitle(String string) {
         this.stage.setTitle(string);
     }
-    
+
     public BaseController getBController() {
         return this.bController;
     }
+
+
 
     /**
      * @param bController

@@ -1,7 +1,7 @@
 package controller.invoice;
 
 import exception.ProcessInvoiceException;
-import controller.PaymentController;
+//import controller.PaymentController;
 import controller.common.BaseScreenController;
 import controller.payment.PaymentScreenController;
 import entity.invoice.Invoice;
@@ -99,14 +99,12 @@ public class InvoiceScreenController extends BaseScreenController {
      */
     @FXML
     void confirmInvoice(MouseEvent event) throws IOException {
-
         BaseScreenController paymentScreen = new PaymentScreenController(this.stage, Configs.PAYMENT_SCREEN_PATH, invoice);
-        paymentScreen.setBController(new PaymentController());
         paymentScreen.setPreviousScreen(this);
         paymentScreen.setHomeScreenHandler(homeScreenHandler);
         paymentScreen.setScreenTitle("Payment Screen");
         paymentScreen.show();
-
     }
+
 
 }

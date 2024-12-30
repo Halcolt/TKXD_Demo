@@ -4,9 +4,14 @@ import controller.BaseController;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import controller.home.HomeScreenController;
+import entity.cart.Cart;
+import entity.cart.CartMedia;
+import entity.media.Media;
+
 
 import java.io.IOException;
 import java.util.Hashtable;
+import java.util.List;
 
 public class BaseScreenController extends FXMLScreenController {
 
@@ -52,17 +57,10 @@ public class BaseScreenController extends FXMLScreenController {
         this.stage.show();
     }
 
-
-    /**
-     * @param string
-     */
     public void setScreenTitle(String string) {
         this.stage.setTitle(string);
     }
-
-    /**
-     * @return BaseController
-     */
+    
     public BaseController getBController() {
         return this.bController;
     }
@@ -91,4 +89,16 @@ public class BaseScreenController extends FXMLScreenController {
         this.homeScreenHandler = HomeScreenHandler;
     }
 
+    public CartMedia checkMediaInCart(Media media) {
+        return Cart.getCart().checkMediaInCart(media);
+    }
+
+    /**
+     * Get the list of items in the Cart.
+     *
+     * @return List[CartMedia]
+     */
+    public List<CartMedia> getListCartMedia() {
+        return Cart.getCart().getListMedia();
+    }
 }

@@ -1,6 +1,6 @@
 package controller.shipping;
 
-import controller.PlaceOrderController;
+//import controller.PlaceOrderController;
 import controller.common.BaseScreenController;
 import controller.invoice.InvoiceScreenController;
 import entity.invoice.Invoice;
@@ -46,24 +46,20 @@ public class DeliveryMethodsScreenController extends BaseScreenController {
     }
 
 
-    /**
-     * @param event
-     * @throws IOException
-     */
+    private Invoice createInvoice(Order order) {
+        order.createOrderEntity();
+        return new Invoice(order);
+    }
+
+
     @FXML
     private void updateDeliveryMethodInfo(MouseEvent event) throws IOException {
-        String deliveryInstructionString = new String(deliveryInstruction.getText());
-        String shipmentDetailString = new String(shipmentDetail.getText());
-        String deliveryDateString = new String();
-        if (deliveryTime.getValue() != null) {
-            deliveryDateString = new String(deliveryTime.getValue().toString());
-        }
-        int typeDelivery;
-        if (placeRushOrderValue.isSelected()) {
-            typeDelivery = Configs.PLACE_RUSH_ORDER;
-        } else {
-            typeDelivery = Configs.PALCE_ORDER;
-        }
+        String deliveryInstructionString = deliveryInstruction.getText();
+        String shipmentDetailString = shipmentDetail.getText();
+        String deliveryDateString = deliveryTime.getValue() != null ? deliveryTime.getValue().toString() : "";
+
+        int typeDelivery = placeRushOrderValue.isSelected() ? Configs.PLACE_RUSH_ORDER : Configs.PALCE_ORDER;
+
         var shipment = new Shipment(typeDelivery);
         shipment.setShipmentDetail(shipmentDetailString);
         shipment.setDeliveryTime(deliveryDateString);
@@ -72,15 +68,17 @@ public class DeliveryMethodsScreenController extends BaseScreenController {
         validatePlaceRushOrderData(shipment);
         order.setShipment(shipment);
 
-        // // create invoice screen
-        Invoice invoice = getBController().createInvoice(order);
+        // create invoice
+        Invoice invoice = createInvoice(order);
+
+        // create invoice screen
         BaseScreenController InvoiceScreenHandler = new InvoiceScreenController(this.stage, Configs.INVOICE_SCREEN_PATH, invoice);
         InvoiceScreenHandler.setPreviousScreen(this);
         InvoiceScreenHandler.setHomeScreenHandler(homeScreenHandler);
         InvoiceScreenHandler.setScreenTitle("Invoice Screen");
-        InvoiceScreenHandler.setBController(getBController());
         InvoiceScreenHandler.show();
     }
+
 
 
     /**
@@ -95,7 +93,6 @@ public class DeliveryMethodsScreenController extends BaseScreenController {
         ShippingScreenHandler.setPreviousScreen(this);
         ShippingScreenHandler.setHomeScreenHandler(homeScreenHandler);
         ShippingScreenHandler.setScreenTitle("Shipping Screen");
-        ShippingScreenHandler.setBController(getBController());
         ShippingScreenHandler.show();
     }
 
@@ -161,12 +158,6 @@ public class DeliveryMethodsScreenController extends BaseScreenController {
         }
     }
 
-    /**
-     * @return PlaceOrderController
-     */
-    public PlaceOrderController getBController() {
-        return (PlaceOrderController) super.getBController();
-    }
     public static void validatePlaceRushOrderData(Shipment deliveryData) {
         if (deliveryData.getShipType() == utils.Configs.PLACE_RUSH_ORDER) {
             // validate

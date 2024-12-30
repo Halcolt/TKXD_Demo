@@ -1,7 +1,6 @@
 package controller.shipping;
 
-import exception.InvalidDeliveryInfoException;
-import controller.PlaceOrderController;
+
 import controller.common.BaseScreenController;
 import entity.order.Order;
 import javafx.beans.property.BooleanProperty;
@@ -20,6 +19,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 public class ShippingScreenController extends BaseScreenController implements Initializable {
@@ -73,8 +73,6 @@ public class ShippingScreenController extends BaseScreenController implements In
      * @throws SQLException
      */
     @FXML
-// Control Coupling
-// Control Cohesion
     void submitDeliveryInfo(MouseEvent event) throws IOException, InterruptedException, SQLException {
 
         // add info to messages
@@ -84,33 +82,23 @@ public class ShippingScreenController extends BaseScreenController implements In
         messages.put("address", address.getText());
         messages.put("instructions", instructions.getText());
         messages.put("province", province.getValue());
-        var placeOrderCtrl = getBController();
-        if (!placeOrderCtrl.validateContainLetterAndNoEmpty(name.getText())) {
+        if (!validateContainLetterAndNoEmpty(name.getText())) {
             PopupScreenController.error("Name is not valid!");
             return;
         }
-        if (!placeOrderCtrl.validatePhoneNumber(phone.getText())) {
+        if (!validatePhoneNumber(phone.getText())) {
             PopupScreenController.error("Phone is not valid!");
             return;
 
         }
-//        if (!placeOrderCtrl.validateContainLetterAndNoEmpty(address.getText())) {
-//            PopupScreenController.error("Address is not valid!");
-//            return;
-//        }
+
         if (province.getValue() == null) {
             PopupScreenController.error("Province is empty!");
             return;
         }
-        try {
-            // process and validate delivery info
-            getBController().processDeliveryInfo(messages);
-        } catch (InvalidDeliveryInfoException e) {
-            throw new InvalidDeliveryInfoException(e.getMessage());
-        }
 
         // calculate shipping fees
-        int shippingFees = getBController().calculateShippingFee(order.getAmount());
+        int shippingFees = calculateShippingFee(order.getAmount());
         order.setShippingFees(shippingFees);
         order.setName(name.getText());
         order.setPhone(phone.getText());
@@ -123,17 +111,36 @@ public class ShippingScreenController extends BaseScreenController implements In
         DeliveryMethodsScreenHandler.setPreviousScreen(this);
         DeliveryMethodsScreenHandler.setHomeScreenHandler(homeScreenHandler);
         DeliveryMethodsScreenHandler.setScreenTitle("Delivery method screen");
-        DeliveryMethodsScreenHandler.setBController(getBController());
         DeliveryMethodsScreenHandler.show();
     }
 
-    /**
-     * @return PlaceOrderController
-     */
-// Data Cohesion
-    public PlaceOrderController getBController() {
-        return (PlaceOrderController) super.getBController();
+
+    private boolean validatePhoneNumber(String phoneNumber) {
+        if (phoneNumber.length() != 10)
+            return false;
+        if (Character.compare(phoneNumber.charAt(0), '0') != 0)
+            return false;
+        try {
+            Long.parseUnsignedLong(phoneNumber);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        return true;
     }
 
+    private boolean validateContainLetterAndNoEmpty(String name) {
+        if (name == null)
+            return false;
+        if (name.trim().length() == 0)
+            return false;
+        if (name.matches("^[a-zA-Z ]*$") == false)
+            return false;
+        return true;
+    }
+
+    private int calculateShippingFee(int amount) {
+        Random rand = new Random();
+        return (int) (((rand.nextFloat() * 10) / 100) * amount);
+    }
 
 }

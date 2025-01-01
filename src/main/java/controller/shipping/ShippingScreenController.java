@@ -1,6 +1,5 @@
 package controller.shipping;
 
-
 import controller.common.BaseScreenController;
 import entity.order.Order;
 import javafx.beans.property.BooleanProperty;
@@ -49,12 +48,7 @@ public class ShippingScreenController extends BaseScreenController implements In
         this.order = order;
     }
 
-    /**
-     * @param arg0
-     * @param arg1
-     */
     @Override
-// Data Cohesion
     public void initialize(URL arg0, ResourceBundle arg1) {
         final BooleanProperty firstTime = new SimpleBooleanProperty(true); // Variable to store the focus on stage load
         name.focusedProperty().addListener((observable, oldValue, newValue) -> {
@@ -66,22 +60,16 @@ public class ShippingScreenController extends BaseScreenController implements In
         this.province.getItems().addAll(Configs.PROVINCES);
     }
 
-    /**
-     * @param event
-     * @throws IOException
-     * @throws InterruptedException
-     * @throws SQLException
-     */
     @FXML
     void submitDeliveryInfo(MouseEvent event) throws IOException, InterruptedException, SQLException {
-
         // add info to messages
-        HashMap messages = new HashMap<>(); 
-        messages.put("name", name.getText()); // Data Coupling 
+        HashMap<String, String> messages = new HashMap<>();
+        messages.put("name", name.getText());
         messages.put("phone", phone.getText());
         messages.put("address", address.getText());
         messages.put("instructions", instructions.getText());
         messages.put("province", province.getValue());
+
         if (!validateContainLetterAndNoEmpty(name.getText())) {
             PopupScreenController.error("Name is not valid!");
             return;
@@ -89,7 +77,6 @@ public class ShippingScreenController extends BaseScreenController implements In
         if (!validatePhoneNumber(phone.getText())) {
             PopupScreenController.error("Phone is not valid!");
             return;
-
         }
 
         if (province.getValue() == null) {
@@ -106,14 +93,13 @@ public class ShippingScreenController extends BaseScreenController implements In
         order.setAddress(address.getText());
         order.setInstruction(instructions.getText());
 
-        //create delivery method screen
-        BaseScreenController DeliveryMethodsScreenHandler = new DeliveryMethodsScreenController(this.stage, Configs.DELIVERY_METHODS_PATH, this.order);
-        DeliveryMethodsScreenHandler.setPreviousScreen(this);
-        DeliveryMethodsScreenHandler.setHomeScreenHandler(homeScreenHandler);
-        DeliveryMethodsScreenHandler.setScreenTitle("Delivery method screen");
-        DeliveryMethodsScreenHandler.show();
+        // create delivery method screen
+        BaseScreenController deliveryMethodsScreenHandler = new DeliveryMethodsScreenController(this.stage, Configs.DELIVERY_METHODS_PATH, this.order);
+        deliveryMethodsScreenHandler.setPreviousScreen(this);
+        deliveryMethodsScreenHandler.setHomeScreenHandler(homeScreenHandler);
+        deliveryMethodsScreenHandler.setScreenTitle("Delivery method screen");
+        deliveryMethodsScreenHandler.show();
     }
-
 
     private boolean validatePhoneNumber(String phoneNumber) {
         if (phoneNumber.length() != 10)
@@ -133,7 +119,7 @@ public class ShippingScreenController extends BaseScreenController implements In
             return false;
         if (name.trim().length() == 0)
             return false;
-        if (name.matches("^[a-zA-Z ]*$") == false)
+        if (!name.matches("^[a-zA-Z ]*$"))
             return false;
         return true;
     }
@@ -143,4 +129,8 @@ public class ShippingScreenController extends BaseScreenController implements In
         return (int) (((rand.nextFloat() * 10) / 100) * amount);
     }
 
+    @FXML
+    private void handleBack(MouseEvent event) throws IOException {
+        navigateBack(Configs.HOME_MEDIA_PATH, "Home Screen");
+    }
 }

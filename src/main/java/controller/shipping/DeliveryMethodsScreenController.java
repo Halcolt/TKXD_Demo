@@ -79,23 +79,10 @@ public class DeliveryMethodsScreenController extends BaseScreenController {
         InvoiceScreenHandler.show();
     }
 
-
-
-    /**
-     * @param event
-     * @throws IOException
-     */
     @FXML
     private void handleBack(MouseEvent event) throws IOException {
-        // Back to previous screen
-        BaseScreenController ShippingScreenHandler = new ShippingScreenController(this.stage, Configs.SHIPPING_SCREEN_PATH,
-                this.order);
-        ShippingScreenHandler.setPreviousScreen(this);
-        ShippingScreenHandler.setHomeScreenHandler(homeScreenHandler);
-        ShippingScreenHandler.setScreenTitle("Shipping Screen");
-        ShippingScreenHandler.show();
+        navigateBack(Configs.HOME_MEDIA_PATH, "Home Screen");
     }
-
 
     /**
      * @param event

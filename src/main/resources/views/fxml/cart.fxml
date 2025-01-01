@@ -88,12 +88,12 @@
                 </AnchorPane>
             </children>
         </VBox>
-      <Text fill="#5091e6" layoutX="1134.0" layoutY="402.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CHECK AGAIN" underline="true">
+      <Text fill="#5091e6" layoutX="1134.0" layoutY="402.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BUY MORE !" underline="true">
          <font>
             <Font size="16.0" />
          </font>
       </Text>
-      <Button fx:id="btnPlaceOrder1" alignment="CENTER" contentDisplay="CENTER" layoutX="1120.0" layoutY="369.0" mnemonicParsing="false" opacity="0.0" prefHeight="55.0" prefWidth="128.0" style="-fx-background-color: #5091e6; -fx-cursor: hand;" text="Back" textFill="WHITE">
+      <Button fx:id="BACK" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#handleBack" layoutX="1120.0" layoutY="369.0" mnemonicParsing="false" opacity="0.0" prefHeight="55.0" prefWidth="128.0" style="-fx-background-color: #5091e6; -fx-cursor: hand;" text="Back" textFill="WHITE">
          <font>
             <Font name="Segoe UI Bold" size="24.0" />
          </font>

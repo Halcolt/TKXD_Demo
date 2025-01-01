@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import utils.Configs;
@@ -204,6 +205,11 @@ public class CartScreenController extends BaseScreenController {
         labelSubtotal.setText(Utils.getCurrencyFormat(subtotal));
         labelVAT.setText(Utils.getCurrencyFormat(vat));
         labelAmount.setText(Utils.getCurrencyFormat(amount));
+    }
+
+    @FXML
+    private void handleBack(MouseEvent event) throws IOException {
+        navigateBack(Configs.HOME_MEDIA_PATH, "Home Screen");
     }
 
 

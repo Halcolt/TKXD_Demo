@@ -164,7 +164,7 @@
             <Font size="16.0" />
          </font>
       </Text>
-      <Button fx:id="btnConfirmDelivery1" alignment="CENTER" contentDisplay="CENTER" layoutX="3.0" mnemonicParsing="false" onMouseClicked="#submitDeliveryInfo" opacity="0.0" prefHeight="58.0" prefWidth="99.0" style="-fx-background-color: #5091e6; -fx-cursor: hand;" text="Back" textFill="WHITE">
+      <Button fx:id="BACK" alignment="CENTER"  contentDisplay="CENTER" layoutX="3.0" mnemonicParsing="false" onMouseClicked="#handleBack" opacity="0.0" prefHeight="58.0" prefWidth="99.0" style="-fx-background-color: #5091e6; -fx-cursor: hand;" text="Back" textFill="WHITE">
          <font>
             <Font name="Segoe UI Bold" size="24.0" />
          </font>

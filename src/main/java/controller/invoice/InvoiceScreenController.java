@@ -106,5 +106,10 @@ public class InvoiceScreenController extends BaseScreenController {
         paymentScreen.show();
     }
 
+    @FXML
+    private void handleBack(MouseEvent event) throws IOException {
+        navigateBack(Configs.HOME_MEDIA_PATH, "Home Screen");
+    }
+
 
 }

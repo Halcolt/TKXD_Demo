@@ -47,6 +47,9 @@ public class BaseScreenController {
         this.prev = prev;
     }
 
+    /**
+     * Hiển thị màn hình hiện tại.
+     */
     public void show() {
         if (this.scene == null) {
             this.scene = new Scene(this.content);
@@ -89,5 +92,21 @@ public class BaseScreenController {
 
     public List<CartMedia> getListCartMedia() {
         return Cart.getCart().getListMedia();
+    }
+
+    /**
+     * Điều hướng về màn hình trước đó hoặc quay về màn hình chính.
+     * @param fallbackScreenPath Đường dẫn màn hình mặc định.
+     * @param fallbackScreenTitle Tiêu đề màn hình mặc định.
+     * @throws IOException Nếu không thể tải màn hình.
+     */
+    public void navigateBack(String fallbackScreenPath, String fallbackScreenTitle) throws IOException {
+        if (this.prev != null) {
+            this.prev.show();
+        } else {
+            BaseScreenController fallbackScreen = new BaseScreenController(this.stage, fallbackScreenPath);
+            fallbackScreen.setScreenTitle(fallbackScreenTitle);
+            fallbackScreen.show();
+        }
     }
 }

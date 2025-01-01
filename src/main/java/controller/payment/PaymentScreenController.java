@@ -7,6 +7,7 @@ import entity.invoice.Invoice;
 import exception.UnrecognizedException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -170,6 +171,12 @@ public class PaymentScreenController extends BaseScreenController {
         resultScreen.setScreenTitle("Result Screen");
         resultScreen.show();
     }
+
+    @FXML
+    private void handleBack(MouseEvent event) throws IOException {
+        navigateBack(Configs.HOME_MEDIA_PATH, "Home Screen");
+    }
+
 
 
 }

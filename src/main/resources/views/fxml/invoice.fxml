@@ -167,7 +167,7 @@
             <Font size="16.0" />
          </font>
       </Text>
-      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="101.0" layoutY="536.0" mnemonicParsing="false" onMouseClicked="#confirmInvoice" opacity="0.0" prefHeight="46.0" prefWidth="177.0" style="-fx-background-color: #5091e6; -fx-cursor: hand;" text="Back" textFill="WHITE">
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="101.0" layoutY="536.0" mnemonicParsing="false" onMouseClicked="#handleBack" opacity="0.0" prefHeight="46.0" prefWidth="177.0" style="-fx-background-color: #5091e6; -fx-cursor: hand;" text="Back" textFill="WHITE">
          <font>
             <Font name="Segoe UI Bold" size="24.0" />
          </font>
